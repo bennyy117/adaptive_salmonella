@@ -1,0 +1,340 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+Chương này trình bày mã nguồn hiện thực hoá từng khối của kiến trúc trong Chương~\ref{ch:arch} và giải thích chi tiết từng dòng. Mã nguồn viết bằng Python, dựa trên \texttt{numpy}, \texttt{pandas}, \texttt{scikit-learn}, \texttt{scipy} và \texttt{requests}. Các listing được đánh số độc lập; số dòng được tham chiếu trong phần giải thích.
+
+\begin{center}\small\itshape
+Ghi chú về notebook: mỗi listing bên dưới kèm dòng ``\textbf{Notebook nguồn}'' cho biết đoạn mã tương ứng nằm trong notebook nào của kho mã (\texttt{NN\_slug.ipynb}).
+\end{center}
+
+\section{Nạp và tiền xử lý dữ liệu}
+
+Listing~\ref{lst:cn-vi} làm sạch một bảng thô thành ma trận số.
+
+\begin{lstlisting}[caption={Ép kiểu số cho một bảng thô.},label=lst:cn-vi]
+def cn(df):
+    o = df.copy(); drop = []
+    for c in list(o.columns):
+        if c == "Unnamed: 0":
+            drop.append(c); continue
+        if o[c].dtype == "object":
+            v = pd.to_numeric(o[c], errors="coerce")
+            if v.notna().mean() > 0.95:
+                o[c] = v.fillna(0)
+            else:
+                drop.append(c)
+    return o.drop(columns=drop).fillna(0)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} Hàm tiện ích nạp dữ liệu dùng chung, xuất hiện trong các notebook pipeline: \texttt{20\_stat\_test.ipynb}, \texttt{21\_stat\_test\_fusion.ipynb}, \texttt{22\_annotation.ipynb}, \texttt{23\_calibration.ipynb}, \texttt{24\_lineage.ipynb} (bắt nguồn từ \texttt{01\_baseline.ipynb}).
+
+\noindent\textbf{Giải thích.} Dòng~2 sao chép frame để giữ nguyên bản gốc và khởi tạo danh sách cột cần loại bỏ. Dòng~3 duyệt qua mọi cột. Dòng~4--5 loại bỏ cột chỉ mục (chuỗi accession), thứ không được phép trở thành đặc trưng. Dòng~6 phát hiện cột dạng văn bản; dòng~7 thử chuyển sang số, biến các ô không phải số thành \texttt{NaN}. Dòng~8 chỉ giữ cột nếu ít nhất $95\%$ giá trị là số, phần còn lại điền $0$ (dòng~9); ngược lại cột bị đánh dấu loại bỏ (dòng~11). Dòng~12 loại các cột đã đánh dấu và thay mọi giá trị thiếu còn lại bằng $0$, trả về một ma trận số hoàn chỉnh.
+
+Listing~\ref{lst:pl-vi} phân tích nhãn kháng thuốc, còn Listing~\ref{lst:load-vi} nạp một kháng sinh trong khi vẫn giữ đúng thứ tự hàng.
+
+\begin{lstlisting}[caption={Phân tích nhãn về $\{0,1\}$.},label=lst:pl-vi]
+def pl(y):
+    if isinstance(y, pd.DataFrame):
+        y = y[y.columns[-1]]
+    y = y.replace({"S":0,"I":0,"R":1,
+                   "Susceptible":0,"Intermediate":0,"Resistant":1})
+    return pd.to_numeric(y, errors="coerce")
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} Dùng chung cùng \texttt{cn}: \texttt{20\_stat\_test.ipynb}, \texttt{21\_stat\_test\_fusion.ipynb}, \texttt{22\_annotation.ipynb}, \texttt{23\_calibration.ipynb}, \texttt{24\_lineage.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2--3 lấy cột cuối nếu đầu vào là cả một frame. Dòng~4--5 ánh xạ kiểu hình phân loại sang số nguyên: nhạy cảm (S) và trung gian (I) thành $0$, kháng (R) thành $1$. Dòng~6 ép kết quả về số, để lại các giá trị chưa biết là \texttt{NaN} nhằm lọc bỏ về sau.
+
+\begin{lstlisting}[caption={Nạp một kháng sinh với các hàng accessory đã căn khớp.},label=lst:load-vi]
+def load(drug):
+    X  = cn(pd.read_csv(REPO/"data/csv"/drug/"gene.csv"))
+    yf = pl(pd.read_csv(REPO/"data/csv"/drug/(drug+"_label.csv")))
+    mask = yf.notna().values
+    pos  = np.where(mask)[0]
+    Xr = X.loc[mask].reset_index(drop=True)
+    y  = yf.loc[mask].reset_index(drop=True).astype(int)
+    Xa = ACC.iloc[pos].reset_index(drop=True)
+    return Xr, y, Xa
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{21\_stat\_test\_fusion.ipynb}, \texttt{22\_annotation.ipynb}, \texttt{23\_calibration.ipynb} (biến thể nạp trong \texttt{20\_stat\_test.ipynb}).
+
+\noindent\textbf{Giải thích.} Dòng~2 đọc và làm sạch tệp marker chuyên gia; dòng~3 đọc và phân tích nhãn. Dòng~4 dựng mặt nạ boolean cho các hàng có nhãn hợp lệ; dòng~5 ghi lại vị trí của chúng. Dòng~6--7 chỉ giữ các hàng có nhãn của marker và nhãn, rồi reset chỉ mục. Dòng~8 chọn \emph{đúng} các vị trí đó từ ma trận accessory toàn cục \texttt{ACC}, bảo đảm hàng đặc trưng và nhãn cùng trỏ tới một genome. Dòng~9 trả về khối marker, nhãn và khối accessory.
+
+\section{Chọn đặc trưng}
+
+Listing~\ref{lst:chi2-vi} hiện thực module chi-bình phương dùng trong Hình~\ref{fig:arch2}.
+
+\begin{lstlisting}[caption={Chọn top-$k$ theo chi-bình phương (chỉ trên tập train).},label=lst:chi2-vi]
+def select_chi2_topk(X_acc, y, k, maxf=8000):
+    Xt = X_acc.values.astype(float)
+    var = Xt.var(axis=0)
+    keep = np.where(var > 0)[0]
+    if len(keep) > maxf:
+        keep = keep[np.argsort(var[keep])[::-1][:maxf]]
+    chi, _ = chi2(np.clip(Xt[:, keep], 0, None), y)
+    chi = np.nan_to_num(chi)
+    order = np.argsort(chi)[::-1][:k]
+    return keep[order]
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{14\_adaptive\_fusion.ipynb} (Direction O), dùng lại trong \texttt{20\_stat\_test.ipynb}; các module gốc: \texttt{11\_sample\_graph.ipynb}, \texttt{12\_marker\_hybrid.ipynb}, \texttt{13\_gene\_embed.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2 chuyển khối train sang mảng số thực. Dòng~3 tính phương sai mọi cột và dòng~4 chỉ giữ các cột không hằng (gene hằng không mang thông tin). Dòng~5--6 giới hạn tập ứng viên còn \texttt{maxf} cột có phương sai cao nhất để tăng tốc. Dòng~7 gọi \texttt{chi2} của scikit-learn, trước đó cắt về giá trị không âm như phép kiểm định yêu cầu; nó trả về một điểm cho mỗi ứng viên. Dòng~8 thay mọi điểm \texttt{NaN} bằng $0$. Dòng~9 sắp xếp giảm dần và giữ $k$ chỉ số cao nhất. Dòng~10 ánh xạ chúng về chỉ số cột gốc. Điểm mấu chốt: \texttt{y} ở đây chỉ là nhãn train, nên việc chọn đặc trưng không bao giờ thấy tập test.
+
+\section{Module đặc trưng: Sample Graph và Gene Embedding}
+
+Listing~\ref{lst:graph-vi} xây các đặc trưng dựa trên độ tương tự giữa các mẫu.
+
+\begin{lstlisting}[caption={Thống kê hàng xóm trên đồ thị mẫu.},label=lst:graph-vi]
+def sample_graph(Xtr, ytr, Xq, is_train, top_k=15):
+    sim = jaccard(Xq.values, Xtr.values)
+    ytr = np.asarray(ytr, float)
+    if is_train:
+        np.fill_diagonal(sim, -1.0)
+    feats = []
+    for i in range(sim.shape[0]):
+        idx = np.argsort(sim[i])[::-1][:top_k]
+        s, lab = sim[i][idx], ytr[idx]
+        w = np.maximum(s, 0)
+        wr = (w*lab).sum()/w.sum() if w.sum() > 0 else lab.mean()
+        feats.append([lab.mean(), wr, s.max(), s.mean(),
+                      float((lab==1).sum())])
+    return pd.DataFrame(feats, index=Xq.index)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} Định nghĩa trong \texttt{21\_stat\_test\_fusion.ipynb}; module gốc: \texttt{11\_sample\_graph.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2 tính độ tương tự Jaccard giữa mỗi genome truy vấn và mỗi genome train. Dòng~4--5 loại bỏ tự-tương-tự khi truy vấn chính là tập train (nếu không mỗi mẫu sẽ là hàng xóm của chính nó). Dòng~7--8 tìm \texttt{top\_k} genome train giống nhất với mẫu $i$. Dòng~9--11 tính tỉ lệ kháng có trọng số theo độ tương tự của các hàng xóm đó (quay về trung bình thường khi mọi trọng số bằng $0$). Dòng~12 lưu năm thống kê hàng xóm cho mỗi mẫu; dòng~14 trả về ma trận $n\times 5$ (pipeline đầy đủ dùng bảy thống kê). Các đặc trưng này giúp mô hình khai thác việc các genome giống nhau thường có cùng kiểu hình.
+
+Listing~\ref{lst:emb-vi} xây các embedding trên đồ thị gene.
+
+\begin{lstlisting}[caption={Embedding đồ thị gene bằng truncated SVD.},label=lst:emb-vi]
+def gene_emb_fit(Xtr, n=16):
+    corr = np.nan_to_num(np.corrcoef(Xtr.values, rowvar=False))
+    np.fill_diagonal(corr, 0); corr = np.abs(corr)
+    A = np.zeros_like(corr, np.float32)
+    for i in range(corr.shape[0]):
+        idx = np.argsort(corr[i])[::-1][:8]
+        A[i, idx] = corr[i, idx]
+    A = np.maximum(A, A.T)
+    return TruncatedSVD(n_components=n, random_state=42).fit_transform(A)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} Định nghĩa trong \texttt{21\_stat\_test\_fusion.ipynb}; module gốc: \texttt{13\_gene\_embed.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2 tính ma trận tương quan gene--gene ($200\times 200$ cho các gene đã chọn). Dòng~3 loại bỏ tự-tương-quan và lấy trị tuyệt đối, nên chỉ còn quan tâm độ mạnh của đồng xuất hiện. Dòng~4--7 giữ, cho mỗi gene, tám cạnh mạnh nhất, tạo ma trận kề thưa $A$. Dòng~8 đối xứng hoá $A$. Dòng~9 áp dụng truncated SVD và trả về ma trận embedding gene $200\times 16$, về sau được lấy trung bình trên các gene hiện diện trong từng mẫu.
+
+\section{Mô hình, ngưỡng và đánh giá một fold}
+
+Listing~\ref{lst:model-vi} dựng bộ phân loại và Listing~\ref{lst:thr-vi} tinh chỉnh ngưỡng.
+
+\begin{lstlisting}[caption={Nhà máy tạo mô hình.},label=lst:model-vi]
+def make_model(name, y_train, seed):
+    if name == "LR":
+        return LogisticRegression(max_iter=5000,
+                 class_weight="balanced", random_state=seed)
+    if name == "RF":
+        return RandomForestClassifier(n_estimators=300,
+                 class_weight="balanced", n_jobs=-1, random_state=seed)
+    pos = max(int((y_train==1).sum()), 1)
+    neg = max(int((y_train==0).sum()), 1)
+    return xgb.XGBClassifier(n_estimators=300, max_depth=4,
+             scale_pos_weight=neg/pos, random_state=seed)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} Dùng chung nhiều notebook; chính tắc trong \texttt{14\_adaptive\_fusion.ipynb} và \texttt{20\_stat\_test.ipynb} (cũng có ở \texttt{10\_ensemble\_select.ipynb}, \texttt{15\_antibiotic\_aware.ipynb}, \texttt{16\_new\_drug.ipynb}, \texttt{17\_external\_tet.ipynb}, \texttt{18\_external\_multi.ipynb}).
+
+\noindent\textbf{Giải thích.} Dòng~2--4 trả về hồi quy logistic với \texttt{class\_weight="balanced"} tái trọng số lớp kháng hiếm tỉ lệ nghịch với tần suất. Dòng~5--7 trả về random forest với cùng cách cân bằng. Dòng~8--11 cấu hình XGBoost, ở đó mất cân bằng được xử lý bởi \texttt{scale\_pos\_weight} bằng tỉ số âm/dương, nên một lỗi ở lớp kháng bị phạt nặng hơn tương ứng.
+
+\begin{lstlisting}[caption={Tinh chỉnh ngưỡng theo F1.},label=lst:thr-vi]
+def thr_pick(y_val, p_val):
+    best_t, best = 0.5, -1
+    for t in np.linspace(0.05, 0.95, 91):
+        s = f1_score(y_val, (p_val >= t).astype(int), zero_division=0)
+        if s > best:
+            best, best_t = s, float(t)
+    return best_t
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{20\_stat\_test.ipynb}, \texttt{21\_stat\_test\_fusion.ipynb}, \texttt{24\_lineage.ipynb}, \texttt{25\_external\_mlst.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2 khởi tạo ngưỡng tốt nhất bằng giá trị ngây thơ $0.5$. Dòng~3 quét $91$ ngưỡng ứng viên. Dòng~4 biến xác suất thành dự đoán tại ngưỡng $t$ và tính F1 trên tập validation. Dòng~5--6 giữ ngưỡng cho F1 cao nhất. Vì tinh chỉnh chỉ dùng dữ liệu validation, F1 trên tập test vẫn là ước lượng trung thực.
+
+Listing~\ref{lst:fold-vi} kết nối các phần trên thành một fold không rò rỉ.
+
+\begin{lstlisting}[caption={Đánh giá một fold không rò rỉ.},label=lst:fold-vi]
+def eval_fold(Xacc, Xr, y, tr, te, model, module, seed, k=200):
+    ytr = y[tr]
+    if module == "paper_ready50":
+        Xtr, Xte = Xr[tr], Xr[te]
+    else:
+        c = select_chi2_topk(Xacc.iloc[tr], ytr, k)
+        Xtr = Xacc.values[np.ix_(tr, c)]
+        Xte = Xacc.values[np.ix_(te, c)]
+    itr, iva = train_test_split(np.arange(len(tr)),
+                 test_size=0.2, stratify=ytr, random_state=seed)
+    m = make_model(model, ytr[itr], seed); m.fit(Xtr[itr], ytr[itr])
+    thr = thr_pick(ytr[iva], m.predict_proba(Xtr[iva])[:, 1])
+    m = make_model(model, ytr, seed); m.fit(Xtr, ytr)
+    p = m.predict_proba(Xte)[:, 1]
+    return f1_score(y[te], (p >= thr).astype(int), zero_division=0)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{20\_stat\_test.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2 lấy nhãn train. Dòng~3--4 dùng trực tiếp marker chuyên gia, còn dòng~6--8 chọn đặc trưng accessory \emph{chỉ trên các hàng train} và dựng khối train/test tương ứng bằng \texttt{np.ix\_}. Dòng~9--10 tách một tập validation ra từ các hàng train. Dòng~11 huấn luyện mô hình trên phần inner-train và dòng~12 tinh chỉnh ngưỡng trên phần validation. Dòng~13 huấn luyện lại mô hình trên toàn bộ fold train, dòng~14 dự đoán xác suất test, dòng~15 trả về F1 test tại ngưỡng đã chỉnh. Mọi đại lượng học được đều chỉ phụ thuộc các hàng train.
+
+\section{Vòng lặp kiểm định chéo}
+
+Listing~\ref{lst:cv-vi} chạy kiểm định chéo phân tầng có lặp.
+
+\begin{lstlisting}[caption={Kiểm định chéo phân tầng có lặp.},label=lst:cv-vi]
+records = []
+for rep in range(N_REPEATS):
+    skf = StratifiedKFold(N_SPLITS, shuffle=True, random_state=42+rep)
+    for fold, (tr, te) in enumerate(skf.split(np.zeros(len(y)), y)):
+        for module in MODULES:
+            for model in MODELS:
+                v = eval_fold(Xacc, Xr, y, tr, te, model, module, 42+rep)
+                if v is not None:
+                    records.append({"module":module, "model":model,
+                                    "rep":rep, "fold":fold, "f1":v})
+df = pd.DataFrame(records)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{20\_stat\_test.ipynb} (phiên bản cho adaptive fusion: \texttt{21\_stat\_test\_fusion.ipynb}).
+
+\noindent\textbf{Giải thích.} Dòng~2 lặp lại toàn bộ quy trình với các seed khác nhau để giảm phương sai. Dòng~3 dựng bộ chia phân tầng giữ nguyên tỉ lệ kháng trong mỗi fold. Dòng~4 duyệt qua năm fold. Dòng~5--6 quét mọi module đặc trưng và mô hình. Dòng~7 đánh giá cấu hình đó trên fold, và dòng~8--10 ghi lại F1 kèm các định danh. Dòng~11 gom mọi kết quả thành một data frame để các bước sau tổng hợp.
+
+\section{Kiểm định thống kê}
+
+Listing~\ref{lst:ttest-vi} hiện thực phép kiểm định $t$ ghép cặp thông thường của Chương~\ref{ch:theory}, còn Listing~\ref{lst:boot-vi} là khoảng tin cậy bootstrap.
+
+\begin{lstlisting}[caption={Kiểm định $t$ ghép cặp trên hiệu số F1 theo từng fold.},label=lst:ttest-vi]
+def paired_ttest(diffs):
+    d = np.asarray(diffs, float); n = len(d)
+    md, vd = d.mean(), d.var(ddof=1)
+    if vd == 0:
+        return np.inf, 0.0
+    t = md / math.sqrt(vd/n)
+    p = 2*stats.t.sf(abs(t), df=n-1)
+    return t, p
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{20\_stat\_test.ipynb} và phiên bản fusion trong \texttt{21\_stat\_test\_fusion.ipynb}; báo cáo chỉ lấy kết quả của kiểm định $t$ ghép cặp thông thường.
+
+\noindent\textbf{Giải thích.} Dòng~2 chuyển các hiệu số theo từng fold thành mảng và đếm số lượng ($n=25$). Dòng~3 tính trung bình và phương sai không chệch. Dòng~4--5 phòng trường hợp suy biến phương sai bằng $0$. Dòng~6 lập thống kê $t$ ghép cặp $\bar{d}/(\hat{\sigma}_d/\sqrt{n})$ và dòng~7 chuyển nó thành $p$-value hai phía với $n-1$ bậc tự do. Vì cả hai cấu hình được chấm điểm trên cùng các fold, việc dùng hiệu số ghép cặp loại bỏ độ khó chung của từng fold và cô lập tác động của adaptive fusion theo từng thuốc.
+
+\begin{lstlisting}[caption={Khoảng tin cậy bootstrap cho hiệu trung bình.},label=lst:boot-vi]
+def bootstrap_ci(diffs, n_boot=5000, seed=42):
+    rng = np.random.RandomState(seed); d = np.asarray(diffs, float)
+    means = [d[rng.randint(0, len(d), len(d))].mean()
+             for _ in range(n_boot)]
+    return np.percentile(means, 2.5), np.percentile(means, 97.5)
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{20\_stat\_test.ipynb} (dùng lại trong \texttt{21\_stat\_test\_fusion.ipynb}).
+
+\noindent\textbf{Giải thích.} Dòng~2 cố định trạng thái ngẫu nhiên để tái lập. Dòng~3--4 rút $5000$ mẫu lại có hoàn lại và lưu trung bình từng lần rút. Dòng~5 trả về phân vị $2.5$ và $97.5$, tức khoảng tin cậy $95\%$ cho hiệu F1 trung bình. Một khoảng chứa $0$ nghĩa là mức cải thiện không phân biệt được với nhiễu.
+
+\section{Phân cụm nhận biết dòng (lineage-aware)}
+
+Listing~\ref{lst:lineage-vi} biến ma trận core SNP thành các nhóm dòng.
+
+\begin{lstlisting}[caption={Khoảng cách core-SNP và phân cụm Ward.},label=lst:lineage-vi]
+M = snp[lab_ids].to_numpy(np.int8).T
+var = M.var(0)
+keep = np.argsort(var)[::-1][:40000]
+Dc = pdist(M[:, keep], metric="hamming")
+Z = linkage(Dc, method="ward")
+labels = fcluster(Z, t=20, criterion="maxclust")
+gkf = GroupKFold(n_splits=5)
+for tr, te in gkf.split(np.zeros(len(y)), y, groups=labels):
+    ...
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{24\_lineage.ipynb} (Direction AB).
+
+\noindent\textbf{Giải thích.} Dòng~1 sắp xếp lại các cột SNP theo thứ tự nhãn và chuyển vị thành ma trận genome$\times$vị trí. Dòng~2--3 giữ $40000$ vị trí biến thiên nhất (vị trí bất biến không phân tách được dòng). Dòng~4 tính khoảng cách Hamming ghép cặp dạng cô đọng, tức tỉ lệ vị trí mà hai genome khác nhau. Dòng~5 thực hiện phân cụm phân cấp Ward, và dòng~6 cắt cây thành $20$ dòng con cân bằng. Dòng~7 dựng bộ chia theo nhóm, và dòng~8 bảo đảm không dòng con nào xuất hiện đồng thời ở cả fold train và test, nên mức sụt điểm báo cáo đo được khả năng khái quát hoá xuyên dòng.
+
+\section{Dữ liệu ngoài qua BV-BRC API}
+
+Listing~\ref{lst:fetch-vi} lấy đặc trưng genome và kiểu MLST.
+
+\begin{lstlisting}[caption={Lấy đặc trưng pgfam và MLST từ BV-BRC.},label=lst:fetch-vi]
+def fetch_tokens(gid):
+    url = (f"{API}/genome_feature/?eq(genome_id,{gid})"
+           "&eq(feature_type,CDS)&select(pgfam_id)&limit(50000)")
+    r = requests.get(url, headers={"Accept":"application/json"}, timeout=90)
+    return sorted({x["pgfam_id"] for x in r.json() if x.get("pgfam_id")})
+
+def fetch_mlst(gid):
+    url = f"{API}/genome/?eq(genome_id,{gid})&select(mlst)&limit(1)"
+    j = requests.get(url, headers={"Accept":"application/json"}, timeout=40).json()
+    return (j[0].get("mlst","") if j else "") or f"solo_{gid}"
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{25\_external\_mlst.ipynb} (Direction AC); \texttt{fetch\_tokens} cũng có ở \texttt{18\_external\_multi.ipynb}, \texttt{19\_external\_robust.ipynb}.
+
+\noindent\textbf{Giải thích.} Dòng~2--3 dựng truy vấn REST hỏi BV-BRC mọi đặc trưng vùng mã hoá của một genome và chỉ trả về định danh họ protein. Dòng~4 thực hiện yêu cầu HTTP có timeout. Dòng~5 gom các định danh họ duy nhất làm tập đặc trưng của genome. Dòng~7--10 truy vấn bản ghi genome để lấy kiểu MLST; nếu trường này rỗng thì genome được đặt vào nhóm đơn lẻ của riêng nó để không vô tình bị gộp với genome khác. Sự hiện diện/vắng mặt của các họ này, nhị phân hoá xuyên genome, tạo thành ma trận đặc trưng ngoài.
+
+\section{Gọi đột biến QRDR}
+
+Listing~\ref{lst:qrdr-vi} trích các đột biến kháng quinolone.
+
+\begin{lstlisting}[caption={Trích residue QRDR cho gyrA/parC.},label=lst:qrdr-vi]
+QRDR = {"gyrA":{"kw":"gyrase subunit A","pos":{83:"S",87:"D"}},
+        "parC":{"kw":"topoisomerase IV subunit A","pos":{80:"S",84:"E"}}}
+def fetch_qrdr(gid):
+    res = {}
+    for gene, info in QRDR.items():
+        seq = ""
+        url = (f"{API}/genome_feature/?eq(genome_id,{gid})"
+               f"&keyword(%22{info['kw'].replace(' ','%20')}%22)"
+               "&select(aa_sequence_md5,product)&limit(5)")
+        j = requests.get(url, headers=HDR, timeout=60).json()
+        md5 = next((x["aa_sequence_md5"] for x in j
+                    if info["kw"] in x.get("product","").lower()
+                    and x.get("aa_sequence_md5")), None)
+        if md5:
+            seq = requests.get(
+                f"{API}/feature_sequence/?eq(md5,{md5})&select(sequence)",
+                headers=HDR, timeout=60).json()[0]["sequence"]
+        for pos, wt in info["pos"].items():
+            res[f"{gene}{pos}"] = seq[pos-1] if len(seq) >= pos else "?"
+    return res
+\end{lstlisting}
+
+\noindent\textbf{Notebook nguồn.} \texttt{26\_mutation.ipynb} (Direction AD).
+
+\noindent\textbf{Giải thích.} Dòng~1--2 khai báo hai gene, từ khoá sản phẩm dùng để tìm chúng, và residue kiểu hoang dã kỳ vọng ở mỗi vị trí kháng. Dòng~5--6 lặp qua cả hai gene. Dòng~7--10 truy vấn BV-BRC tìm đặc trưng có tên sản phẩm khớp từ khoá và trả về checksum của chuỗi protein. Dòng~11--13 chọn checksum khớp đầu tiên, so sánh tên sản phẩm ở dạng chữ thường (lệch chữ hoa/thường ở đây là một lỗi thường gặp). Dòng~14--17 giải checksum thành chuỗi axit amin thực qua một endpoint thứ hai. Dòng~18--19 đọc residue ở mỗi vị trí QRDR (đánh chỉ số từ $1$, nên dùng \texttt{pos-1}), lưu \texttt{"?"} khi thiếu chuỗi. Một bước phía sau mã hoá ``residue $\neq$ kiểu hoang dã'' thành $1$, tạo ma trận đột biến $M\in\{0,1\}^{n\times 4}$ dùng trong Chương~\ref{ch:results}.
+
+\section{Tổng kết}
+
+Các listing trên bao phủ toàn bộ pipeline: tiền xử lý, chọn đặc trưng, các module đặc trưng, mô hình, ngưỡng, kiểm định chéo, kiểm định thống kê, phân cụm dòng, lấy dữ liệu ngoài và gọi đột biến. Mỗi khối thao tác trên các ma trận có kích thước rõ ràng (Chương~\ref{ch:arch}) và tính mọi đại lượng học được chỉ từ dữ liệu train, đó là điều làm cho các kết quả về độ tin cậy ở Chương~\ref{ch:results} đáng tin.
+
+\begin{center}\small
+\textbf{Bảng tra nhanh notebook theo mục}\\[4pt]
+\begin{tabular}{ll}
+\hline
+Mục / Listing & Notebook nguồn \\
+\hline
+5.1 \texttt{cn}, \texttt{pl}, \texttt{load} & 20, 21, 22, 23, 24 (gốc: 01\_baseline) \\
+5.2 \texttt{select\_chi2\_topk} & 14\_adaptive\_fusion, 20\_stat\_test \\
+5.3 \texttt{sample\_graph} & 21\_stat\_test\_fusion (gốc: 11\_sample\_graph) \\
+5.3 \texttt{gene\_emb\_fit} & 21\_stat\_test\_fusion (gốc: 13\_gene\_embed) \\
+5.4 \texttt{make\_model} & 14\_adaptive\_fusion, 20\_stat\_test \\
+5.4 \texttt{thr\_pick} & 20, 21, 24, 25 \\
+5.4 \texttt{eval\_fold} & 20\_stat\_test \\
+5.5 vòng lặp CV & 20\_stat\_test (fusion: 21) \\
+5.6 \texttt{paired\_ttest} & 20\_stat\_test (fusion: 21) \\
+5.6 \texttt{bootstrap\_ci} & 20\_stat\_test \\
+5.7 phân cụm dòng & 24\_lineage \\
+5.8 \texttt{fetch\_tokens}/\texttt{fetch\_mlst} & 25\_external\_mlst \\
+5.9 \texttt{fetch\_qrdr} & 26\_mutation \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

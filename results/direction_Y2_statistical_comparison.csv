@@ -1,0 +1,6 @@
+drug,baseline,adaptive_best,f1_base,f1_adapt,delta_f1,ci_lo,ci_hi,t,p_corr,wilcoxon_p,p_holm,sig_holm
+AMP,paper_ready50/LR_balanced,paper_ready50_plus_chi2_500/LR_balanced,0.9185,0.9116,-0.0069,-0.0207,0.0063,-0.448,0.6611715907636522,0.3078214719088427,1.0,False
+AUG,paper_ready50/RF_balanced,ensemble_top_50/RF_balanced,0.9309,0.9386,0.0077,-0.0054,0.0238,0.457,0.6548479791360926,0.3739447986092539,1.0,False
+AXO,paper_ready50/RF_balanced,ensemble_top_50/RF_balanced,0.9552,0.9668,0.0116,-0.0082,0.0325,0.497,0.626918028850219,0.17118143899932936,1.0,False
+CHL,paper_ready50/LR_balanced,paper_ready50_plus_chi2_200/LR_balanced,0.891,0.8756,-0.0153,-0.031,-0.0006,-0.884,0.3915821966095485,0.08437944259396048,1.0,False
+FOX,paper_ready50/RF_balanced,paper_ready50_plus_chi2_200/RF_balanced,0.9517,0.9544,0.0027,-0.0094,0.0155,0.187,0.8544099486093457,0.7150006546880893,1.0,False

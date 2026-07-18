@@ -1,0 +1,6 @@
+drug,n_top,direct_amr,indirect,unknown,pct_interpretable
+AMP,40,0,0,40,0.0
+AUG,40,0,0,40,0.0
+AXO,40,0,0,40,0.0
+CHL,40,1,0,39,2.5
+FOX,40,0,0,40,0.0

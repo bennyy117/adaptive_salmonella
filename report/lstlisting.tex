@@ -1,0 +1,23 @@
+% Cau hinh hien thi ma nguon (listings) cho Python
+\definecolor{codegray}{gray}{0.4}
+\definecolor{codekw}{rgb}{0.13,0.13,0.6}
+\definecolor{codestr}{rgb}{0.0,0.4,0.0}
+
+\lstdefinestyle{py}{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{codegray},
+  captionpos=b,
+  showstringspaces=false,
+  keywordstyle=\color{codekw}\bfseries,
+  commentstyle=\color{codegray}\itshape,
+  stringstyle=\color{codestr},
+  tabsize=2,
+  columns=fullflexible,
+  literate={->}{{$\rightarrow$}}1 {>=}{{$\geq$}}1 {<=}{{$\leq$}}1
+}
+\lstset{style=py}

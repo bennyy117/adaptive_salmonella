@@ -1,0 +1,11 @@
+source,drug,best_setting,model,f1,f1_std,balanced_acc,auprc,notes
+Direction T,TET,external BV-BRC annotation k=500,LR balanced,0.974,,0.974,0.988,First external proof with tetracycline
+Direction U,TET,stratified random k=100,LR balanced,0.956,0.019,0.954,0.984,External repeated split
+Direction U,CIP,stratified random k=200,XGB weighted,0.963,0.016,0.963,0.955,High score but weak direct quinolone keyword interpretation
+Direction U,STR,stratified random k=200,LR balanced,0.885,0.034,0.875,0.890,Aminoglycoside-related features appear in top list
+Direction U,GEN,stratified random k=200,XGB weighted,0.914,0.014,0.918,0.960,Aminoglycoside-related features appear in top list
+Direction U,NAL,stratified random k=500,LR balanced,0.752,0.056,0.766,0.881,Harder quinolone case; needs mutation-aware features
+Direction V fallback,TET,cluster-aware base + keyword proxy k=500,XGB,0.981,0.001,0.978,0.996,Robust external validation fallback summary
+Direction V fallback,CIP,cluster-aware base annotation k=500,LR,0.942,0.024,0.936,0.967,Needs true mutation validation despite high score
+Direction V fallback,GEN,cluster-aware base annotation k=500,XGB,0.913,0.014,0.919,0.964,Robust external validation fallback summary
+Direction V fallback,STR,cluster-aware base annotation k=100,LR,0.867,0.038,0.863,,AUPRC missing in truncated notebook output

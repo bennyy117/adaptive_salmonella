@@ -1,0 +1,14 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\section{Summary}
+
+This research has built and thoroughly evaluated an antibiotic-aware adaptive feature fusion framework for AMR prediction in \textit{Salmonella}. The problems solved include: confirming that the accessory genome is the dominant predictive signal, outperforming core SNPs; proposing an adaptive per-drug feature-fusion method that reaches high performance and improves F1 on 4 of the 5 drugs over the strong expert-marker baseline, with each antibiotic selecting a different best module; adding lineage-aware evaluation through true phylogenetic splits that identifies antibiotics with a robust mechanism signal (AXO, FOX, TET) and those that are more lineage-dependent (AMP, AUG, CHL, CIP, NAL, GEN); and performing true QRDR mutation calling (gyrA, parC) that provides lineage-robust, mechanism-based features for the quinolone group. Compared with the original study, this research adds external multi-drug validation, paired statistical testing, lineage-aware evaluation, calibration, and mutation analysis. The models are well-calibrated and useful for screening.
+
+The research also has remaining limitations. The original dataset contains only five antibiotics and is almost single-clonal (about 97\%), so it is not diverse enough to claim generalization across many lineages/serovars. The external validation uses genome annotation features rather than a complete sequence pipeline, and mutation calling is limited to the QRDR of gyrA/parC. The results should therefore be read as a competitive and carefully validated proof-of-concept, with the lineage-dependent drugs needing more diverse data before deployment on new lineages.
+
+\section{Suggestion for Future Works}
+
+Future directions include: extending mutation calling to gyrB/parE, \textit{qnr} and efflux genes to explain the part of CIP resistance outside the QRDR; integrating sequence-based annotation via CARD/ResFinder for the most important accessory features to increase interpretation coverage; collecting more lineage/serovar-diverse data to test true generalization; and refactoring the code into a reproducible library with automated tests, benchmarked against rule-based baselines. These directions would raise the research from a proof-of-concept to a more trustworthy research pipeline.
+
+\end{document}

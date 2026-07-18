@@ -1,0 +1,44 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This appendix provides additional detailed results supplementing Chapter~\ref{ch:results}.
+
+\section{Population Structure from Core SNPs}
+
+Table~\ref{tab:popstruct} shows the number of lineages and the size of the largest lineage at different SNP-distance thresholds, evidencing that the dataset is almost single-clonal.
+
+\begin{table}[H]
+\centering
+\caption{Population structure (core SNP clustering).}
+\label{tab:popstruct}
+\begin{tabular}{ccc}
+\hline
+SNP-distance threshold & No. of lineages & Largest lineage (\%) \\ \hline
+0.05 & 14 & 97.4 \\
+0.10 & 13 & 97.5 \\
+0.20 & 13 & 97.5 \\
+0.30 & 8  & 99.1 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{QRDR Mutation Association with Resistance}
+
+Table~\ref{tab:qrdr} lists the resistance rate by mutation status at the QRDR positions for CIP and NAL.
+
+\begin{table}[H]
+\centering
+\caption{QRDR mutations and resistance rate (R-rate).}
+\label{tab:qrdr}
+\begin{tabular}{llcc}
+\hline
+Drug & Position & R-rate if mutated & R-rate if wild-type \\ \hline
+CIP & gyrA83 & 0.76 & 0.04 \\
+CIP & gyrA87 & 0.87 & 0.13 \\
+CIP & parC80 & 0.88 & 0.15 \\
+NAL & gyrA83 & 0.77 & 0.06 \\
+NAL & gyrA87 & 0.84 & 0.04 \\
+NAL & parC80 & 0.75 & 0.08 \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}

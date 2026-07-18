@@ -1,0 +1,6 @@
+snp_dist_threshold,n_lineages,largest_lineage_n,largest_lineage_pct
+0.05,14,1137,97.4
+0.1,13,1138,97.5
+0.15,13,1138,97.5
+0.2,13,1138,97.5
+0.3,8,1156,99.1

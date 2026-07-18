@@ -1,0 +1,38 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This appendix describes the components that allow the results of the research to be reproduced.
+
+\section{Data Sources}
+
+The original set is taken from a public repository\footnote{\url{https://github.com/347251369/Antimicrobial-resistance-prediction-in-Salmonella}} (accessory gene matrix, core SNPs, and S/R labels for five antibiotics). The external set is self-queried from BV-BRC \cite{olson2023bvbrc}: S/R labels from the AMR metadata table, functional gene-family features and the MLST type via the API. No raw reads are required.
+
+\section{Notebook Catalogue}
+
+The code is organized into notebooks numbered in logical order. Table~\ref{tab:notebooks} lists the main notebooks.
+
+\begin{table}[H]
+\centering
+\caption{Main notebooks and their roles.}
+\label{tab:notebooks}
+\begin{tabular}{ll}
+\hline
+Notebook & Role \\ \hline
+\texttt{03\_signal\_source} & Accessory genome versus core SNPs \\
+\texttt{14\_adaptive\_fusion} & Adaptive feature fusion on the five original antibiotics \\
+\texttt{16\_new\_drug} & New-drug simulation (leave-one-drug-out) \\
+\texttt{20\_stat\_test} & Statistical testing (simple modules) \\
+\texttt{21\_stat\_test\_fusion} & Statistical testing (full modules) \\
+\texttt{22\_annotation} & Biological annotation of top features \\
+\texttt{23\_calibration} & Probability calibration and screening utility \\
+\texttt{24\_lineage} & Phylogenetic-lineage evaluation (core SNP) \\
+\texttt{25\_external\_mlst} & External real-prevalence + MLST group-aware \\
+\texttt{26\_mutation} & QRDR mutation calling for gyrA/parC \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Environment and Execution}
+
+The notebooks run on Google Colab or a Python environment with \texttt{numpy}, \texttt{pandas}, \texttt{scikit-learn} \cite{pedregosa2011scikit}, \texttt{xgboost}, \texttt{scipy} and \texttt{requests}. Each notebook downloads the required data itself, performs feature selection on the training set only, and saves results as CSV files. The tables and figures in Chapter~\ref{ch:results} are generated directly from these CSV files.
+
+\end{document}

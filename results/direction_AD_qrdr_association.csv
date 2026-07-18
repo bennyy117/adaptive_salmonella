@@ -1,0 +1,9 @@
+drug,site,wildtype,pct_wildtype,n_mutated,R_rate_if_mutated,R_rate_if_wildtype
+CIP,gyrA83,S,0.788,79,0.759,0.041
+CIP,gyrA87,D,0.92,30,0.867,0.134
+CIP,parC80,S,0.928,24,0.875,0.146
+CIP,parC84,E,0.987,2,0.0,0.194
+NAL,gyrA83,S,0.955,17,0.765,0.06
+NAL,gyrA87,D,0.934,25,0.84,0.039
+NAL,parC80,S,0.971,8,0.75,0.078
+NAL,parC84,E,0.992,0,,0.092

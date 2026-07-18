@@ -1,0 +1,24 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+Chapter~\ref{ch:method} introduced the paired t-test and the phylogenetic-lineage split. This chapter analyses the theoretical basis of these two tools and explains why they are necessary for a reliable evaluation of AMR prediction.
+
+\section{Paired t-Test on Cross-Validation Folds}
+
+When comparing two configurations with repeated cross-validation, we obtain performance differences $d_1,\dots,d_n$ over $n = R\cdot K$ folds ($R$ repeats, $K$ folds); in this research $R = K = 5$, so $n = 25$. Because both configurations are evaluated on the \emph{same} folds, the two score sequences are naturally paired and only their per-fold difference $d_i$ matters, which removes the fold-to-fold difficulty that is common to both models. The ordinary paired t-test compares the mean difference against its sampling variability:
+\begin{equation}
+t = \frac{\bar{d}}{\sqrt{\hat{\sigma}_d^{\,2}/n}} = \frac{\bar{d}}{\hat{\sigma}_d/\sqrt{n}},
+\end{equation}
+where $\bar{d}$ and $\hat{\sigma}_d^{2}$ are the sample mean and unbiased variance of the differences, and the statistic is referred to the Student $t$ distribution with $n-1 = 24$ degrees of freedom to obtain a two-sided $p$-value. The null hypothesis $H_0:\ \mathbb{E}[d]=0$ states that the two configurations perform equally; rejecting it means the mean F1 difference is unlikely to be zero under sampling noise. This research reports this ordinary paired t-test directly, together with the non-parametric Wilcoxon signed-rank test and a bootstrap confidence interval for $\bar{d}$ as robustness checks. A difference is regarded as real only when $\bar{d}$ is appreciable, the confidence interval excludes zero, and $p < \alpha = 0.05$.
+
+\section{Population-Structure Confounding}
+
+Let $Y$ be the resistance phenotype, $G$ a genomic feature, and $L$ the phylogenetic lineage (a latent population-structure variable). A feature can be associated with $Y$ through two paths: a \textit{causal} path via the resistance mechanism ($G \to Y$), and a \textit{confounding} path via lineage ($G \leftarrow L \to Y$) when both the feature and the phenotype are distributed along lineages.
+
+With a random split, strains of the same lineage appear in both the training and test sets; the model can achieve high performance merely by recognizing the lineage, i.e.\ by exploiting the confounding path. A leave-lineage-out split forces the test set to belong to lineages unseen during training, thereby disabling the confounding path and measuring only the causal signal. Hence the performance drop
+\begin{equation}
+\Delta = \text{F1}_{\text{random}} - \text{F1}_{\text{lineage-aware}}
+\end{equation}
+is an estimate of the portion of performance due to confounding. $\Delta \approx 0$ indicates a mechanism-driven prediction that generalizes across lineages; a large $\Delta$ indicates that performance is largely due to population structure. This analysis is the basis for interpreting the results in Chapter~\ref{ch:results}.
+
+\end{document}

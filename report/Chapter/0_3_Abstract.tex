@@ -1,0 +1,18 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\begin{center}
+    \Large{\textbf{ABSTRACT}}\\
+\end{center}
+\vspace{1cm}
+
+Antimicrobial resistance (AMR) in \textit{Salmonella} is an urgent clinical and food-safety problem that calls for fast genome-based prediction tools. Existing studies typically train machine-learning models on genomic data with random data splits and report high accuracy, yet rarely control for three core risks: strong class imbalance, configuration selection based on the test set, and leakage from population structure. This research studies AMR prediction for \textit{Salmonella} under an antibiotic-aware adaptive feature fusion approach, selecting a feature module and model for each antibiotic, while placing the reliability of the results at the centre. The solution is built on 1167 genomes with five original antibiotics and extended by external validation on BV-BRC for five further drugs. The research confirms that the accessory genome is the dominant predictive signal, clearly outperforming core SNPs. Adaptive feature fusion reaches high performance (F1 $0.886$--$0.971$) and improves the F1 score on 4 of the 5 drugs over the strong expert-marker baseline, with each antibiotic selecting a different best module --- direct evidence that the best representation is antibiotic-specific. The research then validates these results more thoroughly than prior work: repeated cross-validation with an ordinary paired t-test; true phylogenetic splits (core SNPs internally, MLST externally) that identify which antibiotics are mechanism-driven and robust across lineages (AXO, FOX, TET) and which are more lineage-dependent; probability calibration and decision-curve analysis for screening; and real QRDR mutation calling (gyrA, parC) that provides lineage-robust, mechanism-based features for the quinolone group. The models are well-calibrated and useful for screening. The main contribution is a competitive, antibiotic-aware prediction framework together with a thorough reliability-checking protocol.
+
+\begin{flushright}
+\begin{tabular}{@{}c@{}}
+Student\\
+Nguyen Bich Loan
+\end{tabular}
+\end{flushright}
+
+\end{document}

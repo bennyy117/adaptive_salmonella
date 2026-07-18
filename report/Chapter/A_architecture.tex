@@ -1,0 +1,140 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This chapter presents the proposed architecture and pipeline in a top-down manner. It gives an overall data flow, then describes each block together with the exact sizes of its input and output matrices, the internal matrices, and the mathematical formulas. The editable source of all diagrams is provided in the attached file \texttt{architecture.drawio} (three pages: Pipeline, Feature Modules, Reliability Layer); the exported images are shown below.
+
+\section{Design Principles and Overall Data Flow}
+
+The pipeline is organized as two cooperating layers. The \textbf{prediction layer} turns genomic matrices into a resistance decision for one antibiotic. The \textbf{reliability layer}, the main contribution, audits every prediction configuration through statistical testing, lineage-aware splitting, negative controls and mutation-level validation. All learning steps (feature selection, thresholding, model fitting) are computed on the training partition only, so that the test partition measures out-of-sample behaviour.
+
+Figure~\ref{fig:arch1} shows the overall data flow, read from left to right: labelled and unlabelled genomes enter the \emph{feature construction} block, the selected features drive the adaptive selection and classifier, and the reliability layer audits the result. Each block is annotated with the size of the matrices that enter and leave it. The notation is summarized in Table~\ref{tab:notation}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{arch_overview.png}
+\caption{Proposed architecture of the AMR prediction pipeline (page 1 of \texttt{architecture.drawio}).}
+\label{fig:arch1}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Notation and matrix dimensions ($m=1167$ genomes, $g=18125$ accessory genes).}
+\label{tab:notation}
+\begin{tabular}{lll}
+\hline
+Symbol & Meaning & Size \\ \hline
+$X_{acc}$ & Accessory gene presence/absence & $1167 \times 18125$ \\
+$X_{50}$ & Paper-ready expert markers & $1167 \times 50$ \\
+$S$ & Core SNP matrix (genomes $\times$ sites) & $1167 \times 126087$ \\
+$y$ & Resistance labels ($0/1$) & $1167 \times 1$ \\
+$X_{train}$ / $X_{test}$ & Train / test feature block & $n_{tr}\times g$ / $n_{te}\times g$ \\
+$X_{sel}$ & Selected feature block & $n_{tr}\times k$ ($k{=}200$) \\
+$p$ & Predicted probabilities & $n_{te}\times 1$ \\
+$D$ & Pairwise SNP (Hamming) distance & $1167\times 1167$ \\
+$M$ & QRDR mutation features & $n\times 4$ \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Inputs and Partitioning}
+
+For an antibiotic $d$, the inputs are the accessory matrix $X_{acc}\in\{0,1\}^{1167\times 18125}$, the expert markers $X_{50}\in\mathbb{R}^{1167\times 50}$, the core SNP matrix $S$, and the label vector $y\in\{0,1\}^{1167}$. Rows of all matrices are aligned by genome accession.
+
+A repeated stratified $K$-fold split ($K=5$, $R=5$ repeats) produces, for fold $k$, a training block $X_{train}\in\{0,1\}^{n_{tr}\times 18125}$ and a test block $X_{test}\in\{0,1\}^{n_{te}\times 18125}$, with $n_{tr}\approx 933$ and $n_{te}\approx 234$. For the lineage-aware evaluation the split is replaced by a grouped split (Section~\ref{sec:reliab}).
+
+\section{Feature Modules}
+
+Figure~\ref{fig:arch2} shows the feature modules and their output sizes. Each module maps the high-dimensional training block into a compact matrix $X_{sel}$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{arch_feature_modules.png}
+\caption{Feature modules and output matrix sizes (page 2 of \texttt{architecture.drawio}).}
+\label{fig:arch2}
+\end{figure}
+
+\textbf{Chi-squared selection.} For each candidate column $j$ (restricted to the $8000$ highest-variance columns), the score is
+\begin{equation}
+\chi^2_j=\sum_{c\in\{0,1\}}\sum_{v\in\{0,1\}}\frac{(O_{cv}-E_{cv})^2}{E_{cv}},
+\end{equation}
+where $O_{cv}$ is the observed count of class $c$ with feature value $v$ and $E_{cv}$ the expected count under independence. The top $k=200$ columns give $X_{sel}\in\{0,1\}^{n_{tr}\times 200}$.
+
+\textbf{Ensemble selection.} Three rankings, chi-squared, the absolute L1-logistic coefficients $|\beta_j|$, and random-forest importances, are min--max normalized and averaged:
+\begin{equation}
+r_j=\tfrac{1}{3}\big(\tilde{\chi}^2_j+\widetilde{|\beta_j|}+\tilde{I}^{RF}_j\big),
+\end{equation}
+and the top $k$ features by $r_j$ are kept.
+
+\textbf{Sample-similarity graph.} For a query genome $q$ and training set $T$, the Jaccard similarity is $\text{sim}(q,t)=\frac{|q\cap t|}{|q\cup t|}$. From the $15$ nearest neighbours the block produces $7$ statistics (neighbour resistance rate, weighted rate, max/mean similarity, $\dots$), giving a matrix of size $n_{tr}\times 7$.
+
+\textbf{Gene-graph embedding.} An adjacency matrix $A\in\mathbb{R}^{200\times 200}$ is built from the absolute correlations of the selected genes; a truncated SVD $A\approx U\Sigma V^{\top}$ keeps $16$ components. Each sample is embedded by averaging the embeddings of its present genes, yielding $n_{tr}\times 17$ (16 dimensions plus a gene count).
+
+\section{Classifier, Threshold and Metrics}
+
+The classifier $f_\theta$ (logistic regression, random forest, or XGBoost, all class-weight balanced) maps $X_{sel}$ to probabilities $p\in[0,1]^{n_{te}}$. For logistic regression, $p_i=\sigma(w^{\top}x_i+b)$ with $\sigma(z)=1/(1+e^{-z})$. A decision threshold $\tau$ is tuned on a validation split by maximizing F1, and $\hat{y}_i=\mathbb{1}[p_i\ge\tau]$.
+
+The reported metrics on the imbalanced data are
+\begin{equation}
+\text{F1}=\frac{2\,\text{P}\cdot\text{R}}{\text{P}+\text{R}},\qquad
+\text{BA}=\tfrac{1}{2}\!\left(\tfrac{TP}{TP+FN}+\tfrac{TN}{TN+FP}\right),
+\end{equation}
+together with AUPRC (area under the precision--recall curve).
+
+\section{Adaptive Selection and Reliability Layer}
+\label{sec:reliab}
+
+For each drug the best configuration is $\arg\max$ over the (module $\times$ model) grid by mean cross-validated F1. The reliability layer (Figure~\ref{fig:arch3}) then audits it.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{arch_reliability.png}
+\caption{Reliability-checking layer with annotated matrix shapes (page 3 of \texttt{architecture.drawio}).}
+\label{fig:arch3}
+\end{figure}
+
+\textbf{Statistical test.} Given per-fold F1 differences $d\in\mathbb{R}^{n}$ ($n=25$), an ordinary paired t-test (derived in Chapter~\ref{ch:theory}) is applied, alongside a Wilcoxon signed-rank test and a bootstrap 95\% confidence interval for the mean difference.
+
+\textbf{Lineage-aware split.} The SNP matrix is reduced to the $40000$ most variable sites; the pairwise Hamming distance $D\in\mathbb{R}^{1167\times 1167}$ is clustered (Ward linkage) into sub-lineages, which define the groups of a \texttt{GroupKFold}.
+
+\textbf{Mutation features.} For CIP/NAL, four QRDR residues (gyrA~83/87, parC~80/84) are extracted into $M\in\{0,1\}^{n\times 4}$ (1 = deviation from wild-type).
+
+\section{Data File Formats and Examples}
+
+The pipeline consumes five file types. Each is a plain CSV/TSV aligned by a genome identifier.
+
+\textbf{(a) Expert markers} \texttt{data/csv/<DRUG>/gene.csv}, one row per genome, first column the accession, then 50 gene columns (presence/frequency):
+\begin{lstlisting}[language=]
+Unnamed: 0,GXG79_15935,GXH02_05140,...,sul1,merT
+GCA_003737005.1_PDT000397393.1,0,1,...,0,1
+GCA_003744485.1_PDT000397419.1,1,0,...,0,0
+\end{lstlisting}
+
+\textbf{(b) Labels} \texttt{<DRUG>\_label.csv}, accession and binary phenotype (0 = susceptible, 1 = resistant):
+\begin{lstlisting}[language=]
+Unnamed: 0,label
+GCA_003737005.1_PDT000397393.1,0
+GCA_003758865.1_PDT000400092.1,1
+\end{lstlisting}
+
+\textbf{(c) Accessory matrix} \texttt{accessory gene existence matrix.csv}, accession then $18125$ binary gene columns:
+\begin{lstlisting}[language=]
+Unnamed: 0,ldtD,golT,astB,...,merT
+GCA_003737005.1_PDT000397393.1,1,0,1,...,1
+\end{lstlisting}
+
+\textbf{(d) Core SNP} \texttt{coreSNP.csv}, one row per SNP site (first column the position), then one column per genome, values encoded $\{0,1,2,3,4\}$ (nucleotide/gap):
+\begin{lstlisting}[language=]
+Unnamed: 0,GCA_003737005.1_PDT000397393.1,GCA_003744485.1_PDT000397419.1,...
+63,4,4,...
+166,2,1,...
+\end{lstlisting}
+
+\textbf{(e) External metadata} \texttt{AMR.tbl.v4} (tab-separated), BV-BRC genome id, name, antibiotic and phenotype:
+\begin{lstlisting}[language=]
+genome_id  genome_name  antibiotic   resistant_phenotype
+28901.13275  Salmonella enterica ...  ciprofloxacin  Susceptible
+28901.8417   Salmonella enterica ...  gentamicin     Resistant
+\end{lstlisting}
+
+Alignment is verified by comparing the accession columns of (a)--(d); the external features (see Chapter~\ref{ch:method}) are fetched by \texttt{genome\_id} through the BV-BRC API. The next chapter presents and explains the source code that implements each block above.
+
+\end{document}

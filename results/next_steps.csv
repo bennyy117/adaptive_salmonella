@@ -1,0 +1,7 @@
+priority,task,purpose,expected_output
+1,Copy or regenerate Direction W final outputs,Create a stable local evidence package,results/direction_W_final_outputs/*
+2,Add unified AMR annotation with AMRFinderPlus/CARD/ResFinder,Improve biological interpretation,annotated_top_features.csv
+3,Add quinolone mutation-aware features for CIP/NAL,Handle mutation-driven resistance,gyrA_gyrB_parC_parE_mutation_tokens.csv
+4,Run lineage-aware validation using serovar/cgMLST/SNP distance or phylogeny,Strengthen anti-leakage claim,lineage_split_results.csv
+5,Refactor shared notebook logic into reusable scripts,Improve reproducibility,src/ package plus tests
+6,Expand external antibiotics and train a real genome-drug model,Move beyond per-drug external validation,external_multidrug_model_results.csv

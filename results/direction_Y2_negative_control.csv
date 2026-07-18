@@ -1,0 +1,6 @@
+drug,config,neg_control_bal_acc
+AMP,paper_ready50_plus_chi2_500/LR_balanced,0.499
+AUG,ensemble_top_50/RF_balanced,0.4833
+AXO,ensemble_top_50/RF_balanced,0.4472
+CHL,paper_ready50_plus_chi2_200/LR_balanced,0.5047
+FOX,paper_ready50_plus_chi2_200/RF_balanced,0.5302

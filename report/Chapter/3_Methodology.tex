@@ -1,0 +1,38 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+Chapter~\ref{ch:lit} identified the reliability gap in AMR prediction. This chapter presents the methodology of the research: data and preprocessing, the adaptive feature fusion framework, the anti-leakage and statistical-testing protocol, phylogenetic-lineage evaluation, and mechanism-level mutation calling.
+
+\section{Overview}
+
+The solution has two layers. The \textit{prediction} layer builds several feature modules from the accessory genome and selects a feature/model configuration for each antibiotic (adaptive feature fusion). The \textit{reliability-checking} layer, the central contribution, comprises four components applied to those configurations: (i) statistical testing against a baseline, (ii) phylogenetic-lineage evaluation, (iii) a negative control by label shuffling, and (iv) mutation-level validation for quinolones. All feature selection and threshold tuning are performed only on the training set of each fold to avoid leakage.
+
+\section{Data and Preprocessing}
+
+The original dataset contains 1167 \textit{Salmonella} genomes with five antibiotics, obtained from a public repository\footnote{\url{https://github.com/347251369/Antimicrobial-resistance-prediction-in-Salmonella}}. Each antibiotic has: 50 ``paper-ready'' markers selected by the original 2025 study \cite{baseline2025}; an accessory gene matrix (1167$\times$18125 binary) from Roary \cite{page2015roary}; and a core SNP matrix (126{,}087 positions $\times$ 1167 genomes). Labels are resistant (R) or susceptible (S), strongly imbalanced (resistance rate 6.1\%--17.1\%). The three data sources are aligned by genome identifier (accession) and verified to match 100\%.
+
+The external dataset is drawn from BV-BRC \cite{olson2023bvbrc}: S/R labels from the AMR metadata table, features as the presence of functional gene families (pgfam) queried via the API, and the MLST type of each genome. Unlike the original set, the external set keeps the \textit{true resistance prevalence} rather than an artificial balance.
+
+\section{Adaptive Feature Fusion}
+
+From the accessory genome, the research builds several feature modules: (a) \texttt{paper\_ready50} (the expert baseline); (b) chi-squared top-$k$ selection (\texttt{chi2\_200/500}); (c) a hybrid of markers and accessory genes; (d) an ensemble selector combining chi-squared scores, L1-logistic coefficients and RF importances; (e) keyword-based functional features; (f) sample-similarity graph features (Jaccard); and (g) gene co-occurrence graph embeddings via SVD. Each antibiotic is assigned the best configuration (module $\times$ model among \{LR, RF, XGBoost\}).
+
+\section{Anti-leakage and Evaluation Protocol}
+
+All feature selection, threshold tuning and training use the training set only; the test set is used solely for reporting. Evaluation uses repeated stratified cross-validation (by default 5 repeats $\times$ 5 folds). The classification threshold is tuned on a validation portion separated from the training set. The reported metrics are F1, balanced accuracy and AUPRC.
+
+\section{Statistical Testing}
+
+To determine whether adaptive fusion truly beats the baseline, the research compares F1 fold by fold in a paired manner and applies an ordinary paired t-test on the per-fold F1 differences over the repeated cross-validation, together with the non-parametric Wilcoxon signed-rank test and a bootstrap 95\% confidence interval for the F1 difference. A difference is treated as real only when the mean gain is appreciable, the confidence interval excludes zero and the t-test gives $p < 0.05$.
+
+\section{Lineage-aware Evaluation}
+
+This is the most important reliability check. For the original set, the research computes the Hamming distance on core SNPs between every pair of genomes, performs hierarchical clustering into sub-lineages, and runs leave-lineage-out (GroupKFold) that never places the same lineage in both the training and test sets. For the external set, the groups are defined by MLST. The F1 drop between the random split and the lineage-aware split measures the degree of dependence on population structure. The research adds a negative control by shuffling labels (expecting balanced accuracy $\approx 0.5$) and checks single-marker reliance by removing the top-$k$ features.
+
+\section{Mutation Calling for Quinolones}
+
+For CIP and NAL, the research retrieves the gyrA and parC protein sequences from BV-BRC, extracts the residues at the known QRDR positions (gyrA Ser83/Asp87, parC Ser80/Glu84), and encodes mutations (deviation from wild-type) as mechanism features. The research compares the generalization of mutation features against annotation features under the MLST split.
+
+This chapter has presented the full prediction framework and, more importantly, the four-step reliability-checking protocol. The theoretical basis of the statistical test and the formalization of confounding are analysed in Chapter~\ref{ch:theory}, while the experimental results are presented in Chapter~\ref{ch:results}.
+
+\end{document}

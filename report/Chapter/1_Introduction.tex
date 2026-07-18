@@ -1,0 +1,41 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\section{Problem Statement}
+\label{sec:problem}
+
+Genome-based prediction of antimicrobial resistance (\gls{AMR}) in \textit{Salmonella} is the subject of this research, which builds on and critically re-evaluates the expert-marker prediction study of the original 2025 work \cite{baseline2025}. \gls{AMR} is one of the greatest threats to global public health, estimated to be associated with millions of deaths each year \cite{murray2022global}. \textit{Salmonella} is a common food-borne pathogen and a suitable subject for studying AMR because large volumes of genomic data with paired resistance phenotypes are available. The problem addressed here is: given the genomic data of a \textit{Salmonella} strain, predict whether that strain is resistant or susceptible to a specific antibiotic.
+
+Accurate and reliable genome-based AMR prediction can support rapid diagnosis, epidemiological surveillance and early warning, reducing reliance on time-consuming conventional susceptibility testing. However, the problem has three characteristic difficulties: the resistant class is often rare (some antibiotics have only about 6\% resistant samples), the genomic feature space is very large (tens of thousands of genes), and the resistance mechanisms differ across antibiotics.
+
+\section{Background and Problems of Research}
+\label{sec:background}
+
+Many studies have applied machine learning to predict AMR from \textit{Salmonella} genomes, using gene-based features (the accessory genome), point variants (core \gls{SNP}), and \gls{MIC} values \cite{nguyen2019using}. Most report high accuracy on random data splits.
+
+Nevertheless, current solutions share three important limitations. First, with strongly imbalanced data, reporting accuracy alone is misleading and is rarely accompanied by statistical significance testing. Second, when many feature/model configurations are tried and the best one is chosen by its score on the test set, the results are inflated by a ``winner's curse'' effect. Third, bacterial genomes have strong population structure: strains of the same phylogenetic lineage are highly similar, so a random split may let the model learn lineage identity rather than the true resistance mechanism, giving an optimistic estimate of generalization \cite{earle2016identifying}.
+
+\section{Research Objectives and Conceptual Framework}
+\label{sec:objectives}
+
+The objective of this research is to build and \textit{reliably evaluate} an AMR prediction framework for \textit{Salmonella}. The research follows an antibiotic-aware adaptive feature fusion approach: instead of a fixed pipeline, each antibiotic is assigned a feature module and model suited to its resistance mechanism.
+
+Corresponding to the three limitations in Section~\ref{sec:background}, the research proposes: (i) rigorous statistical testing (a paired t-test on repeated cross-validation folds, with a Wilcoxon signed-rank test and a bootstrap confidence interval) to determine whether the advantage of adaptive fusion is real or noise; (ii) evaluation along true phylogenetic lineages (leave-lineage-out based on internal core SNPs and external \gls{MLST}) to detect confounding; and (iii) true mechanism-level mutation calling (\gls{QRDR}) for the quinolone group to compare against annotation features.
+
+\section{Contributions}
+
+This research makes five main contributions:
+
+\begin{enumerate}
+\item It confirms that the accessory genome is the dominant AMR predictive signal, consistently outperforming core SNPs across the five antibiotics.
+\item It proposes an antibiotic-aware adaptive feature fusion method that improves F1 on 4 of 5 drugs over the strong expert-marker baseline, with each antibiotic selecting a different best module, and validates this with repeated cross-validation and a paired t-test.
+\item It adds lineage-aware evaluation through true phylogenetic splits, identifying which antibiotics carry a robust mechanism-driven signal and which are more lineage-dependent.
+\item It performs true QRDR mutation calling (gyrA, parC) for the quinolone group and shows that mechanism features generalize across lineages better than annotation features.
+\item It evaluates the deployability of the model (probability calibration, screening utility) and provides reproducible notebooks together with a consolidated report.
+\end{enumerate}
+
+\section{Organization of Research}
+
+The remainder of the research is organized as follows. Chapter~\ref{ch:lit} analyses the problem context and related work and presents the biological and machine-learning background. Chapter~\ref{ch:method} describes the methodology. Chapter~\ref{ch:arch} presents the proposed architecture and pipeline with the input/output matrix sizes and data formats. Chapter~\ref{ch:impl} explains the source code of each pipeline block line by line. Chapter~\ref{ch:theory} gives the theoretical analysis of the paired t-test and formalizes population-structure confounding. Chapter~\ref{ch:results} presents and discusses the experimental results, organized by research question. Chapter~\ref{ch:concl} summarizes the results and limitations and suggests future work.
+
+\end{document}

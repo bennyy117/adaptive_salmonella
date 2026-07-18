@@ -1,0 +1,4 @@
+setting,mean_f1_across_heldout_drugs,interpretation
+genome only,0.729,Genome features alone are useful but weaker for simulated new-drug generalization
+genome + chemical,0.844,Chemical descriptors improve leave-one-drug-out mean F1
+genome + class flags,0.842,Manual antibiotic class flags perform similarly to chemical descriptors

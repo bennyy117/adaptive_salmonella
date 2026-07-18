@@ -1,0 +1,451 @@
+drug,feature,stability,mean_chi2_when_selected,category,evidence,mechanism,source
+AMP,group_8997,1.0,248.75622310747747,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AMP,C2J16_23265,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3Z97_24385,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GPA53_004685,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3004_19165,1.0,231.50040900243116,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3009_23215,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,CKP58_25195,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,K3989_004263,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,DKF47_19030,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,FRK71_15380,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C0N02_22135,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,IYQ21_004605,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,EGD39_22225,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3004_18245,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,DWF11_19130,1.0,248.75622310747747,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C2O75_18625,1.0,231.0175587279561,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,IYQ21_004617,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,I3040_004962,1.0,231.0175587279561,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,CBU12_02120,1.0,225.13754308175376,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GOO02_004997,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3001_18290,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,K5U21_004471,1.0,244.76592876878303,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,HF382_002470,1.0,264.09922725592077,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GXH02_05140,1.0,310.7117015832442,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,group_8256,1.0,242.99514790787907,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AMP,FKE51_24750,1.0,254.19403090122324,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,IYQ21_004620,1.0,245.2146519614026,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,EGD39_24080,1.0,248.8804516600754,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,BW098_21290,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,K9P60_004739,1.0,231.0175587279561,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GXL76_24340,1.0,231.0175587279561,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,IHX02_004460,1.0,252.71289939275798,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,NIO22_003658,0.96,227.27682871164936,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,CGT24_24070,0.96,227.27682871164936,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,CAD01_23650,0.96,227.5391292529707,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3006_19210,0.96,229.7966378099751,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C2484_18900,0.96,227.71226790592763,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,B5A41_24415,0.96,227.47300969209073,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GOO02_003646,0.96,228.4059774773739,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,C3006_19255,0.92,223.600760605578,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AMP,GXG79_15935,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GXH02_05140,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,FKE51_24750,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,CKP39_24515,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GRX98_004990,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GR980_004996,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,6691,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,6548,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,F0X87_13980,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,DQO94_13740,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,581705,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,group_3068,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AMP,151661,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,272748,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,272351,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,CJW30_15375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,KVA68_000891,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,C3Z98_07695,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,pcoS,,,copper,indirect,copper resistance (co-selection),paper_ready50
+AMP,GWJ32_24720,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,merT,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+AMP,GRX98_002223,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,K1191_001114,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,HF382_002470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,134692,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,1023070,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,177156,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,602799,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,JWS55_001066,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,HF382_003966,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GP118_004663,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,CIH76_15790,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GY313_005032,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,LRU76_002404,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,D1X50_19025,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,group_1769,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AMP,I3Y90_004711,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,M8C94_004791,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,group_1740,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AMP,L1T70_004522,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,GSC23_004988,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,K3989_004898,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,1474929,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AMP,CIH76_24475,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,EWR70_05145,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,group_62,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AMP,NCI49_001185,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AMP,sul1,,,sulfonamide,direct,dihydropteroate synthase / sulfonamide resistance,paper_ready50
+AMP,group_69,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AMP,GR980_004837,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,EEK86_04735,1.0,353.0945784088362,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,group_8256,1.0,370.0851483315114,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AUG,FKE51_24750,1.0,388.2883505688533,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GXH02_05140,1.0,401.3213239432584,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GOO02_004997,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,CKP58_25195,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,DWF11_19130,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C3004_18245,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,group_8997,0.96,322.74415484475185,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AUG,IYQ21_004605,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,FRK71_15380,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C2J16_23265,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,DKF47_19030,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,EGD39_22225,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,K3989_004263,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C3Z97_24385,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C3009_23215,0.96,322.74415484475185,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GPA53_004685,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,IYQ21_004617,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C0N02_22135,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C3001_18290,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,IHX02_004460,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,K5U21_004471,0.96,317.39859398771983,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,BW098_21290,0.96,328.81099618950844,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,EGD39_24080,0.96,323.1921671260251,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,IYQ21_004620,0.96,316.8793392042117,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,HF382_002470,0.92,304.98201877773926,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,group_2239,0.88,296.4640527123551,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AUG,C2O75_18625,0.84,297.81341733432845,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,K9P60_004739,0.8,298.8770420774011,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GXL76_24340,0.8,298.8770420774011,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,I3040_004962,0.76,299.15093712313524,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,NIO22_003658,0.76,294.8768045875093,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,CGT24_24070,0.76,294.8768045875093,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C2484_18900,0.72,287.95080780728216,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,CBU12_02120,0.72,289.9613533428727,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,CAD01_23650,0.68,295.72565320388424,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,C3006_19210,0.68,294.7374572083401,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GOO02_003646,0.64,296.5054364854987,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GXL71_23350,0.64,278.53335707225784,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AUG,GXG79_15935,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GXH02_05140,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,FKE51_24750,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,EEK86_04735,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,581705,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,220963,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,LQX60_002464,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,HF382_002470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,group_3068,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AUG,lpfC,,,named_non_amr,unknown,gene có tên nhưng không thuộc catalog AMR đã biết,paper_ready50
+AUG,group_62,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AUG,1456743,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,KVA68_000891,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,DSP01_21310,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GP118_004663,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,C2F11_24270,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,MRQ62_004481,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,group_1165,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AUG,DT764_20815,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,IQT32_002542,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GOQ48_003856,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,E6U56_16990,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GV897_14725,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,CHU36_17600,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,1474929,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,K3989_004898,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,958328,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,CJW30_15375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,1206089,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,GUE08_004754,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,FKE51_04470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GV972_03135,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,EIN40_09735,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,272748,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,GPA53_003853,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,2769761,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,11187,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,C2J53_21575,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,CHU55_23885,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GPA51_000980,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,GPA53_003860,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,CHI38_16170,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,group_69,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AUG,CIX38_05215,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,161400,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AUG,group_683,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AUG,K9P60_004749,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,CEQ84_22980,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,F0X87_13195,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AUG,2437548,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,GWD66_21815,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,EEK86_04735,1.0,725.3697516615691,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,FMQ12_20785,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,FKE51_24750,1.0,797.9399612731468,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,ET461_23055,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GXL71_23300,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,group_8256,1.0,759.1622949945075,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AXO,C4F01_23125,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GSD29_004597,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GXA66_17220,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GWD66_21170,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,CJW07_22695,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,CYN48_22375,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GY345_004353,1.0,552.1531306088494,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,F6X18_22455,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,M5389_004554,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,HWZ53_004454,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GXL71_23350,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,C0692_22305,1.0,551.0491685224413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,JM244_004475,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,F6X18_22510,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,FKE51_11035,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,group_8618,1.0,538.8079911579638,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AXO,FKE51_11045,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,C4F01_21455,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,group_2239,1.0,607.8672942745682,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+AXO,I5A61_003872,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GWD66_21820,1.0,538.8079911579638,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,CJ664_22795,1.0,540.220464096003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,HWZ53_004102,0.92,534.7886430486486,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,GXL71_23785,0.92,534.7886430486486,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,I5A61_004306,0.92,534.7886430486486,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,FIW37_19435,0.92,534.7886430486486,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,EUY04_17740,0.92,530.3026563169316,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,C3T99_23370,0.92,530.3026563169316,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,CJ664_24160,0.92,530.3026563169316,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,EEO94_23850,0.88,529.6140401630287,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,E2U96_22865,0.76,529.2690588390423,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,CBR12_22525,0.76,529.2690588390423,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,EUY04_17625,0.56,515.6192065690451,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+AXO,FKE51_24750,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,group_8256,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,merT,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+AXO,merA,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+AXO,HF382_003898,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,bet,,,named_non_amr,unknown,gene có tên nhưng không thuộc catalog AMR đã biết,paper_ready50
+AXO,ET461_23215,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,580323,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,GSD29_004050,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,K1191_004890,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,CBR12_22525,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,E2U96_22865,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,group_8453,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,CYN48_22375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,GY345_004353,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,2754266,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,GXL71_23785,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,FIW37_19435,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,460536,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,group_2691,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,group_5413,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,JM244_004879,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,2968545,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,C2O94_20700,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,K8N49_003372,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,GUD47_003932,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,LHQ79_004545,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,572889,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,572892,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,D2B71_23325,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,BBY63_17165,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,2573518,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,22961,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,GWJ30_24425,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,CPJ81_19645,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,EEO94_22270,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,649388,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,merD,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+AXO,M5389_004591,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,FKE51_04470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,group_9604,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,group_9605,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+AXO,GWD66_21040,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,CAR27_22305,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,CRY78_23070,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,CIX53_22155,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,1366558,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,38548,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+AXO,C3001_23600,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+AXO,206545,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,C0673_14780,1.0,290.1056748794272,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,BW088_13565,1.0,273.7288527696003,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CBU12_14330,1.0,293.38040215745866,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CHU36_14980,1.0,276.6386484299609,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,BW098_13525,1.0,268.8859297543775,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,GSD31_003021,1.0,273.74029422835235,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,HF382_002470,1.0,330.4912219588223,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,GR980_004837,1.0,336.7312182629565,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CHU36_15020,1.0,293.38040215745866,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,IQT32_002550,1.0,293.38040215745866,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,floR,1.0,290.38405164408016,phenicol,direct,chloramphenicol acetyltransferase / florfenicol efflux,accessory_stability
+CHL,GXH02_05140,1.0,433.72121976341157,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,HF382_003966,1.0,297.6217352724275,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,IYQ21_004617,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,EGD39_24080,0.96,261.35682107536326,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,BW098_21290,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,IHX02_004460,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C3001_18290,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C0N02_22135,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,GOO02_004997,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,GPA53_004685,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,EGD39_22225,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C3Z97_24385,0.96,267.3642661639413,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CAD01_24950,0.96,268.5406176456837,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,group_8997,0.96,262.8184300815945,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+CHL,K3989_004263,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C3004_18245,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,IYQ21_004605,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,FRK71_15380,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C2J16_23265,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,DKF47_19030,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,DWF11_19130,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CKP58_25195,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,EEO94_22270,0.96,276.4673606825475,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C3009_23215,0.96,262.8184300815945,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,CPJ81_19645,0.96,276.4673606825475,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,IYQ21_004620,0.92,256.21928086265837,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,K5U21_004471,0.92,257.4772589431135,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,DKQ93_20465,0.88,261.72935588031055,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,C2484_25205,0.8,250.06166336610084,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+CHL,GXH02_05140,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,HF382_002470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,HF382_003966,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,floR,,,phenicol,direct,chloramphenicol acetyltransferase / florfenicol efflux,paper_ready50
+CHL,GP118_004663,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GXG79_15935,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GR980_004837,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,merT,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+CHL,CJW30_15375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,CAD01_24950,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GWJ30_24555,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,C2484_25205,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,CPJ81_19645,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,EEO94_22270,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,581705,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,group_3907,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,group_1740,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,lpfC,,,named_non_amr,unknown,gene có tên nhưng không thuộc catalog AMR đã biết,paper_ready50
+CHL,CGT24_25100,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,C2F11_24270,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,LQX60_002464,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,aadA1,,,aminoglycoside,direct,aminoglycoside-modifying enzyme,paper_ready50
+CHL,GSD31_005024,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GSD29_005001,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GQ124_003430,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,K3989_004898,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,DKF47_04775,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,CU818_06185,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,MLC23_004686,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GWJ32_24285,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,group_1775,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,C3Z97_25615,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,DKQ93_20465,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,491193,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,DT764_20815,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,272351,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,I3040_005056,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,group_1064,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,GWJ30_24890,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,151661,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,group_1767,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,1206089,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+CHL,group_1756,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+CHL,dfrA12,,,trimethoprim,direct,dihydrofolate reductase,paper_ready50
+CHL,GWJ30_24470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,FIW37_24685,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GR980_004834,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,DY478_24470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,GOQ48_003856,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+CHL,2856043,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,C4F01_23125,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,CYN48_22375,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,EEK86_04735,1.0,729.9558744053697,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,CJ664_22795,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GXL71_23300,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,group_8256,1.0,766.7697612415781,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+FOX,GSD29_004597,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GWD66_21170,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,CJW07_22695,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GXA66_17220,1.0,576.3093360495582,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GY345_004353,1.0,586.2068963207412,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,F6X18_22455,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,M5389_004554,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,HWZ53_004454,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GXL71_23350,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,C0692_22305,1.0,588.9552095077814,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,FKE51_24750,1.0,802.6156900672971,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,ET461_23055,0.96,578.2663429465373,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,group_2239,0.96,611.5089531405706,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+FOX,GWD66_21820,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,FKE51_11035,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,group_8618,0.92,577.5914963748698,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,accessory_stability
+FOX,FKE51_11045,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,C4F01_21455,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,I5A61_003872,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,FMQ12_20785,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GWD66_21815,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,JM244_004475,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,F6X18_22510,0.92,577.5914963748698,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,KZL85_004296,0.84,553.463341775407,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,EEO94_23850,0.8,568.0805450953007,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,FMQ12_09830,0.72,550.1650674633245,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,CJ664_25145,0.72,554.0201700327572,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,CJ664_24160,0.72,574.6501074425997,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,C3T99_23370,0.72,574.6501074425997,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,GIZ28_22030,0.72,552.3649426181801,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,EUY04_17740,0.72,574.6501074425997,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,EEO94_25745,0.68,546.7575875873508,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,J9366_004474,0.68,550.4286449559078,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,NJA99_003063,0.68,546.7311480342144,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,accessory_stability
+FOX,FKE51_24750,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,group_8256,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+FOX,FER41_22475,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,CYN48_22375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GY345_004353,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,HF382_003898,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,bet,,,named_non_amr,unknown,gene có tên nhưng không thuộc catalog AMR đã biết,paper_ready50
+FOX,group_8453,,,unknown_roary_group,unknown,Roary pangenome group không tên — cần sequence,paper_ready50
+FOX,CBR12_22525,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,E2U96_22865,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GV977_23585,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,C2N52_18915,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GAT16_04425,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,ET461_23215,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,11187,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,GPA54_004134,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,C4F01_22975,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,JM244_004879,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,K8N49_003372,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GSD29_004050,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,FFC79_22375,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,CCW16_21870,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,merT,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+FOX,rck,,,named_non_amr,unknown,gene có tên nhưng không thuộc catalog AMR đã biết,paper_ready50
+FOX,C3001_23600,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,1082847,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,1659231,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,1715913,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,2754266,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,460536,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,GXL71_23785,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,FIW37_19435,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,572889,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,572892,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,22961,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,merD,,,mercury,indirect,mercury resistance operon (co-selection marker),paper_ready50
+FOX,M5389_004591,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,FKE51_04470,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,649388,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,CFC17_20870,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GUD47_003932,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,IQT32_004888,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,IQT32_004865,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,CRY78_23070,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,38548,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,DKQ93_20465,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,460645,,,unknown_numeric,unknown,cột số không tên — cần sequence,paper_ready50
+FOX,GOQ56_002243,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,GPA45_005004,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50
+FOX,F6X18_20265,,,unknown_locus_tag,unknown,locus tag đặc trưng chủng — cần sequence để chú giải,paper_ready50

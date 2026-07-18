@@ -1,0 +1,6 @@
+drug,config,n_clusters,random_f1,lineage_f1,f1_drop
+AMP,hybrid_ready_chi2/LR_balanced,30,0.9186,0.8794,0.0392
+AUG,hybrid_ready_chi2/RF_balanced,30,0.9148,0.9410,-0.0262
+AXO,hybrid_ready_chi2/LR_balanced,30,0.9468,0.9254,0.0213
+CHL,hybrid_ready_chi2/LR_balanced,30,0.8614,0.8772,-0.0158
+FOX,hybrid_ready_chi2/LR_balanced,30,0.9335,0.9349,-0.0014

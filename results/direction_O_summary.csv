@@ -1,0 +1,6 @@
+drug,best_module,model,f1,balanced_acc,auprc,delta_f1_vs_ready50,interpretation
+AMP,paper_ready50,XGB weighted,0.943,0.953,0.955,0.000,Paper-ready marker module remains strongest for AMP
+AUG,accessory200 + gene graph embedding,LR balanced,0.932,0.972,0.947,0.006,Gene co-occurrence/embedding signal helps AUG slightly
+AXO,ensemble top 50,XGB weighted,0.971,0.985,0.971,0.014,Ensemble feature selection improves F1
+CHL,paper_ready50 + chi2 200,LR balanced,0.886,0.923,0.907,0.007,Hybrid marker plus accessory features helps CHL
+FOX,accessory200 + sample graph,XGB weighted,0.932,0.959,0.945,0.027,Sample similarity graph helps FOX most clearly

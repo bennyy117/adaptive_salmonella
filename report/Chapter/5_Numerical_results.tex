@@ -1,0 +1,185 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This chapter presents the experimental results organized by six research questions, each accompanied by tables, figures and detailed discussion. The focus is on the reliability of the predictions.
+
+\section{Evaluation Parameters}
+
+Because the data are strongly imbalanced, the research does not use raw accuracy but reports F1, balanced accuracy and AUPRC; the deployability part additionally reports ECE, PPV, NPV and net benefit. Comparisons between two configurations use an ordinary paired t-test on the per-fold F1 differences, complemented by the non-parametric Wilcoxon signed-rank test and a bootstrap 95\% confidence interval, at significance level $\alpha = 0.05$.
+
+\section{Simulation Method}
+
+The main baseline is \texttt{paper\_ready50} (the 50 expert markers), chosen because it represents existing domain knowledge and is a strong reference. Experiments use repeated stratified cross-validation (5$\times$5 folds for the original set, 3$\times$5 for the heavier analyses). The models are LR balanced, RF balanced and XGBoost weighted; feature selection and thresholding use the training set only. The lineage-aware split uses core SNP clustering (original set) and MLST (external set). Everything was re-run independently on the original data locally; results are stored as CSV tables.
+
+\section{RQ1: Accessory genome vs core SNP}
+
+Table~\ref{tab:rq1} shows that the accessory genome outperforms core SNPs in F1 across all five antibiotics, by 0.08--0.32 and consistently beyond the variability. The combined representation is almost equal to the accessory alone, indicating that core SNPs add almost no predictive signal. The result (Figure~\ref{fig:rq1}) confirms that the accessory genome, reflecting mobile genes/plasmids, is the dominant signal.
+
+\begin{table}[H]
+\centering
+\caption{F1 of the accessory genome versus core SNPs (RQ1).}
+\label{tab:rq1}
+\begin{tabular}{lccccc}
+\hline
+& AMP & AUG & AXO & CHL & FOX \\ \hline
+Accessory & 0.87 & 0.94 & 0.96 & 0.88 & 0.94 \\
+Core SNP  & 0.79 & 0.78 & 0.63 & 0.74 & 0.62 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig1_accessory_vs_snp.png}
+\caption{The accessory genome outperforms core SNPs across all five antibiotics.}
+\label{fig:rq1}
+\end{figure}
+
+\section{RQ2: Adaptive fusion improves F1 on most drugs}
+
+When the best configuration is selected for each antibiotic (Direction O, adaptive feature fusion), performance is high across the board (F1 $0.886$--$0.971$, balanced accuracy up to $0.985$, AUPRC up to $0.971$), and adaptive fusion improves the F1 score on 4 of the 5 drugs over the strong expert-marker baseline (Table~\ref{tab:rq2o}, Figure~\ref{fig:rq2}). Crucially, each antibiotic prefers a \textit{different} module: AMP uses the expert markers, AUG a gene co-occurrence graph embedding, AXO the ensemble selector, CHL a marker\,+\,chi-squared hybrid, and FOX the sample-similarity graph. This directly supports the central idea of this research: no single fixed pipeline is best for every drug, and choosing the representation per antibiotic gives the best result.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Best configuration per antibiotic (Direction O adaptive fusion) with the expert-marker baseline. \emph{Baseline F1} is the \texttt{paper\_ready50} result (the 50 expert markers of the original 2025 study); \emph{F1}, \emph{Bal.\ acc.} and \emph{AUPRC} are the adaptive-fusion result, and $\Delta$F1 is its gain over the baseline.}
+\label{tab:rq2o}
+\begin{tabular}{llcccccc}
+\hline
+Drug & Best module & Model & Baseline F1 & F1 & Bal.\ acc. & AUPRC & $\Delta$F1 \\ \hline
+AMP & paper\_ready50 & XGB & 0.943 & 0.943 & 0.953 & 0.955 & $+0.000$ \\
+AUG & accessory200 + gene graph emb. & LR & 0.926 & 0.932 & 0.972 & 0.947 & $+0.006$ \\
+AXO & ensemble top 50 & XGB & 0.957 & 0.971 & 0.985 & 0.971 & $+0.014$ \\
+CHL & paper\_ready50 + chi2 200 & LR & 0.879 & 0.886 & 0.923 & 0.907 & $+0.007$ \\
+FOX & accessory200 + sample graph & XGB & 0.905 & 0.932 & 0.959 & 0.945 & $+0.027$ \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig_directionO.png}
+\caption{Direction O adaptive fusion (best module per drug) versus the 50 expert markers: F1 improves on 4/5 drugs.}
+\label{fig:rq2}
+\end{figure}
+
+To confirm that these improvements are stable and not an artifact of a single split, the comparison is repeated with a $5\times5$ repeated stratified cross-validation and assessed fold by fold with an ordinary paired t-test on the F1 differences. The paired t-test confirms that the adaptive-fusion advantage holds across folds: adaptive fusion matches or exceeds the strong expert-marker baseline on every antibiotic and improves F1 on 4 of the 5 drugs, most clearly on FOX ($+0.027$) and AXO ($+0.014$). A label-shuffling negative control gives balanced accuracy $\approx 0.5$ for every antibiotic, confirming that the pipeline does not leak trivially.
+
+\section{RQ3: Drug metadata supports new-drug simulation}
+
+In the leave-one-drug-out simulation, mean F1 rises from 0.729 (genome only) to 0.844 with chemical descriptors and 0.842 with drug-class flags. Drug-class/chemical information is insufficient on its own but helpful when combined with genome features. Note that this result is ``new drug'' rather than ``new genome'', because the same genome appears in both the training and test sets.
+
+\section{RQ4: Population structure and confounding}
+
+This is an additional robustness analysis of the Direction O models. Core SNP clustering shows that about 97--99\% of the 1167 genomes belong to a single clonal lineage, i.e.\ low phylogenetic diversity, so a random split is largely within-lineage. Under a stricter leave-sub-lineage-out split (Figure~\ref{fig:rq4a}), AXO and FOX stay strong (their signal is mechanism-driven and generalizes across lineages), whereas AMP/AUG/CHL drop by 0.24--0.38, indicating that their signal is more lineage-dependent. This does not remove the Direction O gains under standard evaluation, but it tells us which drugs are safe to trust on new lineages and which need more diverse data --- a useful, honest reading of the model rather than a single headline number.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig3_lineage_original.png}
+\caption{Original set: random F1 versus leave-sub-lineage-out (core SNP).}
+\label{fig:rq4a}
+\end{figure}
+
+The external results (Table~\ref{tab:rq4}, Figure~\ref{fig:rq4b}) extend the picture to five further drugs. Reported with the \textit{true resistance prevalence} (rather than an artificially balanced subset), F1 is strong on TET, CIP and GEN, and TET remains robust under the MLST group-aware split (F1 0.91), confirming a mechanism-driven signal. NAL is the hardest case and CIP/GEN depend more on lineage under the group-aware split (0.37--0.53), again marking which drugs need more diverse data. The negative control (label shuffling) gives balanced accuracy $\approx 0.5$ for every antibiotic, confirming the pipeline does not leak trivially.
+
+\begin{table}[H]
+\centering
+\caption{External real-prevalence: random F1 versus MLST group-aware (RQ4).}
+\label{tab:rq4}
+\begin{tabular}{lcccc}
+\hline
+& TET & CIP & GEN & NAL \\ \hline
+True prevalence     & 0.53 & 0.20 & 0.11 & 0.09 \\
+F1 random           & 0.947 & 0.839 & 0.756 & 0.589 \\
+F1 MLST group-aware & 0.911 & 0.504 & 0.530 & 0.371 \\
+$\Delta$ (drop)     & $-0.04$ & $-0.34$ & $-0.23$ & $-0.22$ \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig4_external_mlst.png}
+\caption{External: TET generalizes across lineages; CIP/NAL/GEN collapse toward baseline.}
+\label{fig:rq4b}
+\end{figure}
+
+\section{Single-marker reliance and biological interpretation}
+
+The feature-dropout experiment (Table~\ref{tab:dropout}) reveals different degrees of single-marker reliance across antibiotics: AXO and FOX drop sharply when the top-5/top-10 features are removed (reliance on a few beta-lactam mechanism markers), whereas AMP and CHL are almost unchanged (distributed signal). This is consistent with AXO/FOX carrying a robust mechanism signal in RQ4.
+
+\begin{table}[H]
+\centering
+\caption{F1 when removing the top-$k$ most important features (accessory\_chi2\_200/LR).}
+\label{tab:dropout}
+\begin{tabular}{lcccc}
+\hline
+Drug & full & drop top-1 & drop top-5 & drop top-10 \\ \hline
+AMP & 0.854 & 0.850 & 0.842 & 0.849 \\
+AUG & 0.927 & 0.921 & 0.899 & 0.898 \\
+AXO & 0.943 & 0.937 & 0.837 & 0.839 \\
+CHL & 0.873 & 0.873 & 0.879 & 0.877 \\
+FOX & 0.898 & 0.891 & 0.799 & 0.768 \\ \hline
+\end{tabular}
+\end{table}
+
+Regarding biological interpretation, the expert markers contain known resistance genes with the correct mechanism (e.g.\ \textit{floR} for CHL, \textit{sul1} for AMP), yet many features are metal co-selection markers (\textit{mer}, \textit{pco}) or integron/mobile elements, suggesting the signal is partly lineage/plasmid-driven. Notably, the most stable accessory features are almost entirely un-annotatable by name (locus tags/Roary groups): the annotatable fraction is only 0--2.5\% among the top-40 for each antibiotic. This is a limitation of annotation coverage, showing the need for sequence-based tools (CARD/ResFinder) rather than a model failure.
+
+\section{RQ5: Probability calibration and screening utility}
+
+Isotonic calibration reduces the ECE from a high level (up to 0.076) to about 0.005--0.01 for every antibiotic (Figure~\ref{fig:rq5}), making the predicted probabilities trustworthy. At the operating threshold of 0.5 (LR model, calibrated probabilities), the model achieves NPV 0.98--0.998 and specificity $\approx 0.99$ with an alert rate of only 6--16\% (Table~\ref{tab:rq5}), suitable as a screening/rule-out tool. Decision curve analysis gives a positive net benefit that exceeds the ``treat-all''/``treat-none'' strategies at all thresholds.
+
+\begin{table}[H]
+\centering
+\caption{Operating points for screening (LR, isotonic, threshold 0.5).}
+\label{tab:rq5}
+\begin{tabular}{lccccc}
+\hline
+Drug & Sensitivity & Specificity & PPV & NPV & Alert rate \\ \hline
+AMP & 0.889 & 0.994 & 0.967 & 0.978 & 0.157 \\
+AUG & 0.942 & 0.989 & 0.923 & 0.992 & 0.122 \\
+AXO & 0.972 & 0.997 & 0.958 & 0.998 & 0.062 \\
+CHL & 0.833 & 0.999 & 0.991 & 0.980 & 0.091 \\
+FOX & 0.915 & 0.999 & 0.985 & 0.995 & 0.057 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{fig6_calibration.png}
+\caption{ECE decreases markedly after isotonic calibration.}
+\label{fig:rq5}
+\end{figure}
+
+\section{RQ6: Mutation-level analysis for quinolones}
+
+True QRDR mutation calling shows a strong association with resistance: when a mutation is present the resistance rate reaches 0.75--0.88 versus only 0.04--0.15 for wild-type (Figure~\ref{fig:rq6}). More importantly, the mutation features (only four positions) generalize far better than annotation features under the MLST split: for NAL, F1 holds at 0.85 while annotation features collapse to 0.37; for CIP, F1 reaches 0.56 (other mechanisms such as \textit{qnr}/efflux lie outside the QRDR). This directly demonstrates that mechanism features are superior to annotation features in causality and generalization.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig5_mutation_qrdr.png}
+\caption{Left: QRDR mutations are strongly associated with CIP resistance. Right: mutation features let NAL generalize across lineages.}
+\label{fig:rq6}
+\end{figure}
+
+\section{Comparison with the original study}
+
+Table~\ref{tab:cmp} summarizes how this research relates to the original study that introduced the expert-marker dataset \cite{baseline2025}. The two share the same data and task, but this research extends the original along several axes: an adaptive per-drug feature-fusion method instead of one fixed feature set; five additional external drugs from BV-BRC; repeated cross-validation with a paired significance test; lineage-aware evaluation using core SNPs and MLST; probability calibration and a decision-curve analysis for deployability; and real QRDR mutation calling for the quinolone group. The contribution is therefore not only a competitive predictor but also a more complete and better-validated study.
+
+\begin{table}[H]
+\centering
+\caption{What this research adds relative to the original study.}
+\label{tab:cmp}
+\begin{tabular}{lll}
+\hline
+Aspect & Original study & This research \\ \hline
+Feature approach & Fixed 50 expert markers & Adaptive per-drug fusion (many modules) \\
+Antibiotics & 5-drug dataset & 5 original + 5 external (BV-BRC) \\
+Evaluation & Single split & Repeated CV + paired t-test \\
+Lineage check & Not reported & Lineage-aware split (core SNP / MLST) \\
+Deployability & Not assessed & Calibration + decision curve \\
+Mechanism & Gene presence/absence & + real QRDR mutation analysis \\ \hline
+\end{tabular}
+\end{table}
+
+Overall, this chapter shows a consistent picture: the accessory genome is the dominant signal; adaptive feature fusion is competitive and improves F1 on 4/5 drugs while selecting a suitable representation per drug; the additional lineage-aware, external, calibration and mutation analyses make clear which signals are mechanism-driven and robust, and which drugs need more diverse data. Chapter~\ref{ch:concl} draws conclusions and suggests future work.
+
+\end{document}

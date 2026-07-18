@@ -1,0 +1,283 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This chapter presents the source code that implements each block of the architecture in Chapter~\ref{ch:arch} and explains it line by line. The code is Python and relies on \texttt{numpy}, \texttt{pandas}, \texttt{scikit-learn}, \texttt{scipy} and \texttt{requests}. Listings are numbered independently; line numbers are referenced in the explanations.
+
+\section{Data Loading and Preprocessing}
+
+Listing~\ref{lst:cn} cleans a raw table into a numeric matrix.
+
+\begin{lstlisting}[caption={Numeric coercion of a raw table.},label=lst:cn]
+def cn(df):
+    o = df.copy(); drop = []
+    for c in list(o.columns):
+        if c == "Unnamed: 0":
+            drop.append(c); continue
+        if o[c].dtype == "object":
+            v = pd.to_numeric(o[c], errors="coerce")
+            if v.notna().mean() > 0.95:
+                o[c] = v.fillna(0)
+            else:
+                drop.append(c)
+    return o.drop(columns=drop).fillna(0)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 copies the frame so the original is untouched and initializes a list of columns to remove. Line~3 iterates over every column. Lines~4--5 drop the index column (the accession string), which must not become a feature. Line~6 detects text columns; line~7 tries to convert them to numbers, turning non-numeric entries into \texttt{NaN}. Line~8 keeps a column only if at least $95\%$ of its values are numeric, filling the rest with zero (line~9); otherwise the column is marked for removal (line~11). Line~12 drops the marked columns and replaces any remaining missing values with zero, returning a fully numeric matrix.
+
+Listing~\ref{lst:pl} parses the resistance label, and Listing~\ref{lst:load} loads one antibiotic while keeping the row alignment.
+
+\begin{lstlisting}[caption={Label parsing to $\{0,1\}$.},label=lst:pl]
+def pl(y):
+    if isinstance(y, pd.DataFrame):
+        y = y[y.columns[-1]]
+    y = y.replace({"S":0,"I":0,"R":1,
+                   "Susceptible":0,"Intermediate":0,"Resistant":1})
+    return pd.to_numeric(y, errors="coerce")
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Lines~2--3 take the last column if a whole frame is passed. Lines~4--5 map the categorical phenotype to integers: susceptible and intermediate become $0$, resistant becomes $1$. Line~6 coerces the result to numbers, leaving unknown values as \texttt{NaN} so they can be filtered later.
+
+\begin{lstlisting}[caption={Loading one antibiotic with aligned accessory rows.},label=lst:load]
+def load(drug):
+    X  = cn(pd.read_csv(REPO/"data/csv"/drug/"gene.csv"))
+    yf = pl(pd.read_csv(REPO/"data/csv"/drug/(drug+"_label.csv")))
+    mask = yf.notna().values
+    pos  = np.where(mask)[0]
+    Xr = X.loc[mask].reset_index(drop=True)
+    y  = yf.loc[mask].reset_index(drop=True).astype(int)
+    Xa = ACC.iloc[pos].reset_index(drop=True)
+    return Xr, y, Xa
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 reads and cleans the expert-marker file; line~3 reads and parses the labels. Line~4 builds a boolean mask of rows with a valid label; line~5 records their positions. Lines~6--7 keep only labelled rows of the markers and labels and reset the index. Line~8 selects the \emph{same} positions from the global accessory matrix \texttt{ACC}, guaranteeing that feature rows and labels refer to the same genome. Line~9 returns the marker block, the labels and the accessory block.
+
+\section{Feature Selection}
+
+Listing~\ref{lst:chi2} implements the chi-squared module used in Figure~\ref{fig:arch2}.
+
+\begin{lstlisting}[caption={Chi-squared top-$k$ selection (train only).},label=lst:chi2]
+def select_chi2_topk(X_acc, y, k, maxf=8000):
+    Xt = X_acc.values.astype(float)
+    var = Xt.var(axis=0)
+    keep = np.where(var > 0)[0]
+    if len(keep) > maxf:
+        keep = keep[np.argsort(var[keep])[::-1][:maxf]]
+    chi, _ = chi2(np.clip(Xt[:, keep], 0, None), y)
+    chi = np.nan_to_num(chi)
+    order = np.argsort(chi)[::-1][:k]
+    return keep[order]
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 converts the training block to a float array. Line~3 computes the variance of every column and line~4 keeps only non-constant columns (a constant gene carries no information). Lines~5--6 cap the candidate set to the \texttt{maxf} highest-variance columns for speed. Line~7 calls scikit-learn's \texttt{chi2}, first clipping to non-negative values as the test requires; it returns one score per candidate. Line~8 replaces any \texttt{NaN} score with zero. Line~9 sorts scores in descending order and keeps the top $k$ indices. Line~10 maps these back to original column indices. Crucially, \texttt{y} here is the training label only, so selection never sees the test set.
+
+\section{Feature Modules: Sample Graph and Gene Embedding}
+
+Listing~\ref{lst:graph} builds the sample-similarity features.
+
+\begin{lstlisting}[caption={Sample-graph neighbour statistics.},label=lst:graph]
+def sample_graph(Xtr, ytr, Xq, is_train, top_k=15):
+    sim = jaccard(Xq.values, Xtr.values)
+    ytr = np.asarray(ytr, float)
+    if is_train:
+        np.fill_diagonal(sim, -1.0)
+    feats = []
+    for i in range(sim.shape[0]):
+        idx = np.argsort(sim[i])[::-1][:top_k]
+        s, lab = sim[i][idx], ytr[idx]
+        w = np.maximum(s, 0)
+        wr = (w*lab).sum()/w.sum() if w.sum() > 0 else lab.mean()
+        feats.append([lab.mean(), wr, s.max(), s.mean(),
+                      float((lab==1).sum())])
+    return pd.DataFrame(feats, index=Xq.index)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 computes the Jaccard similarity between every query genome and every training genome. Lines~4--5 remove self-similarity when the query is the training set itself (otherwise each sample would be its own neighbour). Lines~7--8 find the \texttt{top\_k} most similar training genomes for sample $i$. Lines~9--11 compute a similarity-weighted resistance rate of those neighbours (falling back to the plain mean when all weights are zero). Line~12 stores five neighbour statistics per sample; line~14 returns the resulting $n\times 5$ matrix (the full pipeline uses seven statistics). These features let the model exploit that similar genomes tend to share phenotype.
+
+Listing~\ref{lst:emb} builds gene-graph embeddings.
+
+\begin{lstlisting}[caption={Gene-graph embedding via truncated SVD.},label=lst:emb]
+def gene_emb_fit(Xtr, n=16):
+    corr = np.nan_to_num(np.corrcoef(Xtr.values, rowvar=False))
+    np.fill_diagonal(corr, 0); corr = np.abs(corr)
+    A = np.zeros_like(corr, np.float32)
+    for i in range(corr.shape[0]):
+        idx = np.argsort(corr[i])[::-1][:8]
+        A[i, idx] = corr[i, idx]
+    A = np.maximum(A, A.T)
+    return TruncatedSVD(n_components=n, random_state=42).fit_transform(A)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 computes the gene--gene correlation matrix ($200\times 200$ for the selected genes). Line~3 removes self-correlation and takes absolute values, so only the strength of co-occurrence matters. Lines~4--7 keep, for each gene, its eight strongest edges, giving a sparse adjacency matrix $A$. Line~8 symmetrizes $A$. Line~9 applies a truncated SVD and returns a $200\times 16$ gene-embedding matrix, later averaged over the genes present in each sample.
+
+\section{Model, Threshold and Fold Evaluation}
+
+Listing~\ref{lst:model} builds the classifier and Listing~\ref{lst:thr} tunes the threshold.
+
+\begin{lstlisting}[caption={Model factory.},label=lst:model]
+def make_model(name, y_train, seed):
+    if name == "LR":
+        return LogisticRegression(max_iter=5000,
+                 class_weight="balanced", random_state=seed)
+    if name == "RF":
+        return RandomForestClassifier(n_estimators=300,
+                 class_weight="balanced", n_jobs=-1, random_state=seed)
+    pos = max(int((y_train==1).sum()), 1)
+    neg = max(int((y_train==0).sum()), 1)
+    return xgb.XGBClassifier(n_estimators=300, max_depth=4,
+             scale_pos_weight=neg/pos, random_state=seed)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Lines~2--4 return a logistic regression whose \texttt{class\_weight="balanced"} reweights the rare resistant class inversely to its frequency. Lines~5--7 return a random forest with the same balancing. Lines~8--11 configure XGBoost, where the imbalance is handled by \texttt{scale\_pos\_weight} set to the negative/positive ratio, so a resistant error costs proportionally more.
+
+\begin{lstlisting}[caption={Threshold tuning by F1.},label=lst:thr]
+def thr_pick(y_val, p_val):
+    best_t, best = 0.5, -1
+    for t in np.linspace(0.05, 0.95, 91):
+        s = f1_score(y_val, (p_val >= t).astype(int), zero_division=0)
+        if s > best:
+            best, best_t = s, float(t)
+    return best_t
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 initializes the best threshold to the naive $0.5$. Line~3 scans $91$ candidate thresholds. Line~4 turns probabilities into predictions at threshold $t$ and computes F1 on the validation split. Lines~5--6 keep the threshold with the highest F1. Because tuning uses validation data only, the test F1 remains an honest estimate.
+
+Listing~\ref{lst:fold} ties these together into one leakage-free fold.
+
+\begin{lstlisting}[caption={Leakage-free evaluation of one fold.},label=lst:fold]
+def eval_fold(Xacc, Xr, y, tr, te, model, module, seed, k=200):
+    ytr = y[tr]
+    if module == "paper_ready50":
+        Xtr, Xte = Xr[tr], Xr[te]
+    else:
+        c = select_chi2_topk(Xacc.iloc[tr], ytr, k)
+        Xtr = Xacc.values[np.ix_(tr, c)]
+        Xte = Xacc.values[np.ix_(te, c)]
+    itr, iva = train_test_split(np.arange(len(tr)),
+                 test_size=0.2, stratify=ytr, random_state=seed)
+    m = make_model(model, ytr[itr], seed); m.fit(Xtr[itr], ytr[itr])
+    thr = thr_pick(ytr[iva], m.predict_proba(Xtr[iva])[:, 1])
+    m = make_model(model, ytr, seed); m.fit(Xtr, ytr)
+    p = m.predict_proba(Xte)[:, 1]
+    return f1_score(y[te], (p >= thr).astype(int), zero_division=0)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 slices the training labels. Lines~3--4 use the expert markers directly, while lines~6--8 select accessory features \emph{on the training rows only} and build the corresponding train and test blocks with \texttt{np.ix\_}. Lines~9--10 carve a validation subset out of the training rows. Line~11 fits a model on the inner-training part and line~12 tunes the threshold on the validation part. Line~13 refits the model on the full training fold, line~14 predicts test probabilities, and line~15 returns the test F1 at the tuned threshold. Every learned quantity depends only on training rows.
+
+\section{Cross-validation Loop}
+
+Listing~\ref{lst:cv} runs the repeated stratified cross-validation.
+
+\begin{lstlisting}[caption={Repeated stratified cross-validation.},label=lst:cv]
+records = []
+for rep in range(N_REPEATS):
+    skf = StratifiedKFold(N_SPLITS, shuffle=True, random_state=42+rep)
+    for fold, (tr, te) in enumerate(skf.split(np.zeros(len(y)), y)):
+        for module in MODULES:
+            for model in MODELS:
+                v = eval_fold(Xacc, Xr, y, tr, te, model, module, 42+rep)
+                if v is not None:
+                    records.append({"module":module, "model":model,
+                                    "rep":rep, "fold":fold, "f1":v})
+df = pd.DataFrame(records)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 repeats the whole procedure with different seeds to reduce variance. Line~3 builds a stratified splitter that preserves the resistant ratio in each fold. Line~4 iterates over the five folds. Lines~5--6 sweep every feature module and model. Line~7 evaluates that configuration on the fold, and lines~8--10 record the F1 with its identifiers. Line~11 collects all results into a data frame that later stages aggregate.
+
+\section{Statistical Testing}
+
+Listing~\ref{lst:ttest} implements the ordinary paired t-test of Chapter~\ref{ch:theory}, and Listing~\ref{lst:boot} the bootstrap interval.
+
+\begin{lstlisting}[caption={Ordinary paired t-test on the per-fold F1 differences.},label=lst:ttest]
+def paired_ttest(diffs):
+    d = np.asarray(diffs, float); n = len(d)
+    md, vd = d.mean(), d.var(ddof=1)
+    if vd == 0:
+        return np.inf, 0.0
+    t = md / math.sqrt(vd/n)
+    p = 2*stats.t.sf(abs(t), df=n-1)
+    return t, p
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 converts the per-fold differences to an array and counts them ($n=25$). Line~3 computes their mean and unbiased variance. Lines~4--5 guard the degenerate zero-variance case. Line~6 forms the paired-t statistic $\bar{d}/(\hat{\sigma}_d/\sqrt{n})$, and line~7 converts it to a two-sided $p$-value with $n-1$ degrees of freedom. Because both configurations are scored on the same folds, working with the paired differences removes the shared fold difficulty and isolates the per-drug effect of adaptive fusion.
+
+\begin{lstlisting}[caption={Bootstrap confidence interval for the mean difference.},label=lst:boot]
+def bootstrap_ci(diffs, n_boot=5000, seed=42):
+    rng = np.random.RandomState(seed); d = np.asarray(diffs, float)
+    means = [d[rng.randint(0, len(d), len(d))].mean()
+             for _ in range(n_boot)]
+    return np.percentile(means, 2.5), np.percentile(means, 97.5)
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~2 fixes the random state for reproducibility. Lines~3--4 draw $5000$ resamples with replacement and store each resample mean. Line~5 returns the $2.5$ and $97.5$ percentiles, i.e.\ a $95\%$ confidence interval for the mean F1 difference. An interval that contains zero means the improvement is not distinguishable from noise.
+
+\section{Lineage-aware Clustering}
+
+Listing~\ref{lst:lineage} turns the core SNP matrix into lineage groups.
+
+\begin{lstlisting}[caption={Core-SNP distance and Ward clustering.},label=lst:lineage]
+M = snp[lab_ids].to_numpy(np.int8).T
+var = M.var(0)
+keep = np.argsort(var)[::-1][:40000]
+Dc = pdist(M[:, keep], metric="hamming")
+Z = linkage(Dc, method="ward")
+labels = fcluster(Z, t=20, criterion="maxclust")
+gkf = GroupKFold(n_splits=5)
+for tr, te in gkf.split(np.zeros(len(y)), y, groups=labels):
+    ...
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Line~1 reorders the SNP columns to the label order and transposes to a genomes$\times$sites matrix. Lines~2--3 keep the $40000$ most variable sites (invariant sites do not separate lineages). Line~4 computes the condensed pairwise Hamming distance, the fraction of sites at which two genomes differ. Line~5 performs Ward hierarchical clustering, and line~6 cuts the tree into $20$ balanced sub-lineages. Line~7 builds a grouped splitter, and line~8 guarantees that no sub-lineage appears in both the training and test folds, so the reported drop measures cross-lineage generalization.
+
+\section{External Data via the BV-BRC API}
+
+Listing~\ref{lst:fetch} fetches genome features and the MLST type.
+
+\begin{lstlisting}[caption={Fetching pgfam features and MLST from BV-BRC.},label=lst:fetch]
+def fetch_tokens(gid):
+    url = (f"{API}/genome_feature/?eq(genome_id,{gid})"
+           "&eq(feature_type,CDS)&select(pgfam_id)&limit(50000)")
+    r = requests.get(url, headers={"Accept":"application/json"}, timeout=90)
+    return sorted({x["pgfam_id"] for x in r.json() if x.get("pgfam_id")})
+
+def fetch_mlst(gid):
+    url = f"{API}/genome/?eq(genome_id,{gid})&select(mlst)&limit(1)"
+    j = requests.get(url, headers={"Accept":"application/json"}, timeout=40).json()
+    return (j[0].get("mlst","") if j else "") or f"solo_{gid}"
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Lines~2--3 build a REST query that asks BV-BRC for all coding-sequence features of one genome and returns only their protein-family identifiers. Line~4 performs the HTTP request with a timeout. Line~5 collects the unique family identifiers as the genome's feature set. Lines~7--10 query the genome record for its MLST type; if the field is empty the genome is put in its own singleton group so it is not accidentally grouped with others. The presence/absence of these families, binarized across genomes, forms the external feature matrix.
+
+\section{QRDR Mutation Calling}
+
+Listing~\ref{lst:qrdr} extracts the quinolone-resistance mutations.
+
+\begin{lstlisting}[caption={QRDR residue extraction for gyrA/parC.},label=lst:qrdr]
+QRDR = {"gyrA":{"kw":"gyrase subunit A","pos":{83:"S",87:"D"}},
+        "parC":{"kw":"topoisomerase IV subunit A","pos":{80:"S",84:"E"}}}
+def fetch_qrdr(gid):
+    res = {}
+    for gene, info in QRDR.items():
+        seq = ""
+        url = (f"{API}/genome_feature/?eq(genome_id,{gid})"
+               f"&keyword(%22{info['kw'].replace(' ','%20')}%22)"
+               "&select(aa_sequence_md5,product)&limit(5)")
+        j = requests.get(url, headers=HDR, timeout=60).json()
+        md5 = next((x["aa_sequence_md5"] for x in j
+                    if info["kw"] in x.get("product","").lower()
+                    and x.get("aa_sequence_md5")), None)
+        if md5:
+            seq = requests.get(
+                f"{API}/feature_sequence/?eq(md5,{md5})&select(sequence)",
+                headers=HDR, timeout=60).json()[0]["sequence"]
+        for pos, wt in info["pos"].items():
+            res[f"{gene}{pos}"] = seq[pos-1] if len(seq) >= pos else "?"
+    return res
+\end{lstlisting}
+
+\noindent\textbf{Explanation.} Lines~1--2 declare the two genes, the product keyword used to find them, and the wild-type residue expected at each resistance position. Lines~5--6 loop over both genes. Lines~7--10 query BV-BRC for the feature whose product matches the keyword and return the checksum of its protein sequence. Lines~11--13 pick the first matching checksum, comparing product names in lower case (a case mismatch here is a common bug). Lines~14--17 resolve the checksum into the actual amino-acid sequence through a second endpoint. Lines~18--19 read the residue at each QRDR position (1-indexed, hence \texttt{pos-1}), storing \texttt{"?"} when the sequence is missing. A downstream step encodes ``residue $\neq$ wild-type'' as $1$, producing the mutation matrix $M\in\{0,1\}^{n\times 4}$ used in Chapter~\ref{ch:results}.
+
+\section{Summary}
+
+The listings above cover the full pipeline: preprocessing, feature selection, feature modules, model, threshold, cross-validation, statistical testing, lineage clustering, external fetching and mutation calling. Each block operates on clearly sized matrices (Chapter~\ref{ch:arch}) and computes every learned quantity from training data only, which is what makes the reliability results in Chapter~\ref{ch:results} trustworthy.
+
+\end{document}

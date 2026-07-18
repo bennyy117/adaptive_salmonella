@@ -1,0 +1,27 @@
+file,size_kb,cells,markdown_cells,code_cells,executed_code_cells,outputs,errors,title
+01_baseline.ipynb,1121.4,15,1,14,14,39,0,Salmonella AMR 2025 — Hướng A mở rộng (bản sửa lỗi tần suất đặc trưng)
+02_stability.ipynb,406.8,31,16,15,15,34,0,Direction B — Độ ổn định đặc trưng và diễn giải sinh học đầy đủ hơn
+03_signal_source.ipynb,360.8,35,18,17,17,26,0,Direction C — So sánh gen phụ và biến thể lõi cho dự đoán kháng kháng sinh ở *Salmonella*
+04_temporal.ipynb,759.6,20,1,19,19,44,0,Direction D — Temporal split có sanity check
+05_bio_interp.ipynb,935.9,29,12,17,0,52,0,Direction E — Giải thích sinh học các đặc trưng quan trọng
+06_imbalance.ipynb,507.7,18,1,17,17,39,0,Direction E — Xử lý dữ liệu lệch lớp cho dự đoán kháng kháng sinh Salmonella
+07_phylogeny.ipynb,385.4,18,1,17,0,27,0,Direction G — IQ-TREE phylogeny-informed AMR prediction
+08_functional.ipynb,372.7,16,1,15,15,30,0,Direction H — Domain / functional annotation feature augmentation for Salmonella AMR
+09_network.ipynb,293.8,16,2,14,14,32,0,Direction I — Network-guided feature augmentation for Salmonella AMR prediction
+10_ensemble_select.ipynb,299.1,15,1,14,6,23,0,Direction J FIXED — Ensemble pangenome feature selection
+11_sample_graph.ipynb,111.5,6,1,5,5,17,0,Direction K — Sample-similarity graph augmentation
+12_marker_hybrid.ipynb,114.4,7,1,6,6,17,0,Direction L — Marker-aware hybrid accessory gene model
+13_gene_embed.ipynb,111.9,6,1,5,5,17,0,Direction N — Gene graph embedding feature augmentation
+14_adaptive_fusion.ipynb,332.2,16,1,15,15,30,0,"Direction O FINAL — Drug-specific adaptive feature fusion, N_REPEATS = 10"
+15_antibiotic_aware.ipynb,266.3,16,3,13,0,18,0,Direction P/Q — Antibiotic-aware chemical analysis + optional genome–drug model
+16_new_drug.ipynb,506.3,16,1,15,15,23,0,Direction R — Leave-one-drug-out genome–drug generalization
+17_external_tet.ipynb,177.5,13,1,12,12,18,0,Direction T — External new-drug proof with BV-BRC genome features
+18_external_multi.ipynb,286.1,23,10,13,13,18,0,Direction U — External multi-drug validation + leakage-aware check
+19_external_robust.ipynb,386.5,24,11,13,13,22,0,Direction V — Robust external validation + cluster-aware + quinolone-aware extension
+20_stat_test.ipynb,33.6,27,12,15,0,0,0,Direction Y — Statistical rigor + lineage-aware robustness cho adaptive feature fusion (5 thuốc gốc)
+21_stat_test_fusion.ipynb,26.5,23,12,11,0,0,0,Direction Y2 — Direction O modules dưới kiểm định thống kê + lineage-aware
+22_annotation.ipynb,15.7,19,10,9,0,0,0,Direction Z — Chú giải sinh học top features (CARD/ResFinder families)
+23_calibration.ipynb,11.6,16,9,7,0,0,0,Direction AA — Calibration + screening utility
+24_lineage.ipynb,14.0,18,10,8,0,0,0,Direction AB — Lineage-aware validation (core SNP) + single-marker reliance
+25_external_mlst.ipynb,11.1,12,7,5,0,0,0,Direction AC — External validation: real prevalence + MLST group-aware (self-fetch BV-BRC)
+26_mutation.ipynb,10.2,10,6,4,0,0,0,Direction AD — Mutation-level validation cho quinolone (QRDR gyrA/parC)

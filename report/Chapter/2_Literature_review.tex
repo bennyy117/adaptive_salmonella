@@ -1,0 +1,30 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+This chapter analyses the problem context and related work, clarifies the motivation of the research, and presents the necessary background: resistance mechanisms, genome representation, and model evaluation under class imbalance.
+
+\section{Scope of Research}
+
+The research is limited to predicting the binary resistant/susceptible phenotype of \textit{Salmonella} from \textit{pre-processed} genomic data (accessory gene and core SNP matrices); it does not process raw reads. The original dataset contains 1167 genomes with five antibiotics (AMP, AUG, AXO, CHL, FOX); the external validation uses genome annotations from \gls{BVBRC} for five other antibiotics (TET, CIP, STR, GEN, NAL). The focus of the research is not only to achieve high accuracy but to \textit{evaluate the reliability} of the predictions.
+
+\section{Related Work}
+
+Machine learning on genomes has been widely applied to AMR prediction. Nguyen et al.\ used deep learning to predict MIC for non-typhoidal \textit{Salmonella} together with the associated genomic features \cite{nguyen2019using}. Database-driven tools such as ResFinder \cite{bortolaia2020resfinder} and CARD \cite{alcock2023card} predict phenotype from the presence of known resistance genes, while PointFinder \cite{zankari2017pointfinder} detects chromosomal point mutations, an approach that is especially important for quinolone resistance.
+
+A common trait of many machine-learning studies is to report high performance on random splits while rarely controlling for population structure. Earle et al.\ showed that controlling for population structure (lineage effects) is essential for correct inference in bacterial association studies \cite{earle2016identifying}. This is precisely the gap this research targets: combining adaptive feature fusion with a reliability-checking protocol comprising statistical testing, phylogenetic-lineage evaluation, and mutation-level validation.
+
+\section{Biological Background: Resistance Mechanisms and Genome Representation}
+
+Antimicrobial resistance arises through several mechanisms: production of drug-inactivating enzymes (e.g.\ beta-lactamases), efflux of the drug, modification of the drug target, and reduced permeability. Many resistance genes reside on mobile genetic elements (plasmids, integrons, transposons) and are therefore inherited in clusters and along lineages. For the quinolone group (CIP, NAL), resistance is typically caused by point mutations in the QRDR of gyrA (Ser83, Asp87) and parC (Ser80) \cite{redgrave2014fluoroquinolone}.
+
+Bacterial genomes are represented through two main sources. The \textit{accessory genome} is the set of genes not present in every strain, obtained from pan-genome analysis with tools such as Roary \cite{page2015roary}; it strongly reflects mobile resistance genes. \textit{Core SNPs} are point variants in the core genome, reflecting phylogenetic distance and used to infer lineage structure. \gls{MLST} \cite{maiden1998mlst} types strains by the alleles of housekeeping genes, allowing strains to be grouped by lineage.
+
+\section{Machine-Learning Background: Models, Feature Selection and Evaluation}
+
+The research uses common classifiers: logistic regression (\gls{LR}), random forest (\gls{RF}) \cite{pedregosa2011scikit} and \gls{XGB}, all with class-imbalance handling (class weighting, \texttt{scale\_pos\_weight}). Feature selection uses the chi-squared test and an ensemble method combining several criteria.
+
+With imbalanced data, accuracy does not reflect quality; the research prioritizes F1, balanced accuracy and \gls{AUPRC}. To compare two configurations on repeated cross-validation, the research uses a paired t-test on the per-fold F1 differences, supported by the non-parametric Wilcoxon signed-rank test and a bootstrap confidence interval. The quality of predicted probabilities is measured by \gls{ECE} and improved through calibration (Platt scaling or isotonic regression); clinical usefulness is assessed by decision curve analysis \cite{vickers2006decision}.
+
+In summary, this chapter has established the research gap, the lack of reliability control in AMR prediction, and provided both the biological and machine-learning background. The next chapter presents the specific methodology proposed to fill this gap.
+
+\end{document}
