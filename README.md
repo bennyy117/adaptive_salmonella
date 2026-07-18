@@ -5,9 +5,6 @@ Genome-based prediction of antimicrobial resistance (AMR) in *Salmonella*, built
 audits every prediction for the three failure modes most machine-learning AMR papers ignore:
 class imbalance, test-set configuration selection, and leakage from population structure.
 
-> Undergraduate thesis project. Baseline reference: You et al., *Engineering* **48**(5):174–184, 2025
-> (DOI [10.1016/j.eng.2025.01.013](https://doi.org/10.1016/j.eng.2025.01.013)).
-
 ---
 
 ## Overview
@@ -21,7 +18,7 @@ competitive while putting **reliability at the centre**:
 - **Signal.** The **accessory genome** (18,125 genes) is the dominant predictive signal and
   clearly outperforms core SNPs.
 - **Adaptive fusion.** Each antibiotic selects its own best feature module × model, reaching
-  **F1 0.886–0.971**. Raw F1 improves on 4/5 drugs over the strong expert-marker baseline, but the
+  **F1 0.886-0.971**. Raw F1 improves on 4/5 drugs over the strong expert-marker baseline, but the
   gain is **not statistically significant after Holm correction (0/5 drugs)** — the honest reading
   is *parity with, and competitive against,* the expert-marker baseline, with the value coming from
   antibiotic-specific representation, not a blanket accuracy win.
@@ -36,10 +33,10 @@ competitive while putting **reliability at the centre**:
 | Does adaptive fusion beat the expert-marker baseline? | Competitive / at parity — 0/5 drugs significant after Holm |
 | Which drugs are mechanism-driven & lineage-robust? | **AXO, FOX, TET** (small drop under blocked CV) |
 | Which drugs are lineage-confounded? | **AMP, AUG, CHL** and **CIP, NAL, GEN** (collapse toward ~0.5 under lineage/MLST split) |
-| Are models deployable for screening? | Yes — isotonic calibration ECE ≈ 0.005–0.01; NPV 0.98–0.998; positive net benefit |
+| Are models deployable for screening? | Yes — isotonic calibration ECE ≈ 0.005-0.01; NPV 0.98-0.998; positive net benefit |
 | Quinolone mechanism features? | QRDR mutations (gyrA, parC) strongly associate with resistance and stay robust across lineages |
 
-> ⚠️ The dataset is ~97–99% one clonal lineage (by core SNP), so lineage-aware evaluation is
+> ⚠️ The dataset is ~97-99% one clonal lineage (by core SNP), so lineage-aware evaluation is
 > essential — several drugs that look strong under random CV are largely explained by population
 > structure. See `results/LINEAGE_AWARE_SUMMARY.md`.
 
@@ -66,7 +63,7 @@ Reliability Layer; exported to `report/figures/arch_*.png`).
 **Reliability layer** (main contribution) — audits each configuration:
 
 - **Statistical testing** — per-fold F1 differences over repeated CV (n = 25), paired t-test with
-  Nadeau–Bengio correction, Wilcoxon, and bootstrap CIs, Holm-corrected across drugs.
+  Nadeau-Bengio correction, Wilcoxon, and bootstrap CIs, Holm-corrected across drugs.
 - **Lineage-aware split** — pairwise SNP (Hamming) distance clustered (Ward) into sub-lineages that
   define `GroupKFold`; MLST groups for external data.
 - **Negative control** — label shuffling collapses balanced accuracy to ~0.5.
@@ -79,7 +76,7 @@ Reliability Layer; exported to `report/figures/arch_*.png`).
 
 ```
 .
-├── code/           # 26 analysis notebooks (01–26), one per research "direction"
+├── code/           # 26 analysis notebooks (01-26), one per research "direction"
 ├── report/         # LaTeX thesis (main.tex → main.pdf) + architecture.drawio
 ├── results/        # Frozen result tables (CSV) + per-direction Markdown summaries
 ├── figures/        # Figures used in the report
@@ -94,13 +91,13 @@ Reliability Layer; exported to `report/figures/arch_*.png`).
 
 | Group | Notebooks | Purpose |
 |---|---|---|
-| Baseline & signal | `01_baseline` · `02_stability` · `03_signal_source` · `04_temporal` | Baseline models, stability, accessory-vs-SNP signal source |
-| Biology & imbalance | `05_bio_interp` · `06_imbalance` · `07_phylogeny` · `08_functional` · `09_network` | Interpretation, class imbalance, phylogeny, functional/network views |
-| Feature modules | `10_ensemble_select` · `11_sample_graph` · `12_marker_hybrid` · `13_gene_embed` | The four fusion feature modules |
-| Adaptive fusion | `14_adaptive_fusion` · `15_antibiotic_aware` · `16_new_drug` | Per-antibiotic module × model selection |
-| External validation | `17_external_tet` · `18_external_multi` · `19_external_robust` · `25_external_mlst` | BV-BRC external drugs, MLST group-aware split |
-| Reliability | `20_stat_test` · `21_stat_test_fusion` · `23_calibration` · `24_lineage` | Statistical tests, calibration, lineage-aware validity |
-| Mechanism | `22_annotation` · `26_mutation` | Gene annotation, QRDR mutation calling |
+| Baseline & signal | `01_baseline` ; `02_stability` ; `03_signal_source` ; `04_temporal` | Baseline models, stability, accessory-vs-SNP signal source |
+| Biology & imbalance | `05_bio_interp` ; `06_imbalance` ; `07_phylogeny` ; `08_functional` ; `09_network` | Interpretation, class imbalance, phylogeny, functional/network views |
+| Feature modules | `10_ensemble_select` ; `11_sample_graph` ; `12_marker_hybrid` ; `13_gene_embed` | The four fusion feature modules |
+| Adaptive fusion | `14_adaptive_fusion` ; `15_antibiotic_aware` ; `16_new_drug` | Per-antibiotic module × model selection |
+| External validation | `17_external_tet` ; `18_external_multi` ; `19_external_robust` ; `25_external_mlst` | BV-BRC external drugs, MLST group-aware split |
+| Reliability | `20_stat_test` ; `21_stat_test_fusion` ; `23_calibration` ; `24_lineage` | Statistical tests, calibration, lineage-aware validity |
+| Mechanism | `22_annotation` ; `26_mutation` | Gene annotation, QRDR mutation calling |
 
 Each notebook corresponds to a "Direction" whose frozen outputs and a written summary live in
 `results/` (see `results/README.md`).
@@ -138,7 +135,7 @@ original antibiotics:
 - 50 "paper-ready" expert markers (per-genome gene table),
 - the accessory gene matrix (1167 × 18125 binary, from Roary),
 - the core-SNP matrix (126,087 positions × 1167 genomes),
-- and the S/R labels (strongly imbalanced, resistance rate 6.1%–17.1%).
+- and the S/R labels (strongly imbalanced, resistance rate 6.1%-17.1%).
 
 All three sources are aligned by genome accession (verified to match 100%). The notebooks document
 the exact CSV/TSV formats. The **external** validation genomes are queried programmatically from
